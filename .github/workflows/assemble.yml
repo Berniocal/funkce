@@ -3,6 +3,8 @@ name: Sestavit aplikace funkcí
 on:
   push:
     branches: [main]
+  issues:
+    types: [opened]
   workflow_dispatch:
 
 permissions:
