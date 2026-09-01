@@ -38,7 +38,9 @@ jobs:
           from pathlib import Path
           import base64, gzip
           src = Path('_source/linearni.html.gz.b64').read_text(encoding='utf-8').strip()
-          Path('linearni/index.html').write_bytes(gzip.decompress(base64.b64decode(src)))
+          src += '=' * ((4 - len(src) % 4) % 4)
+          data = base64.b64decode(src)
+          Path('linearni/index.html').write_bytes(gzip.decompress(data))
           PY
 
       - name: Uložit sestavené aplikace
@@ -51,4 +53,5 @@ jobs:
             exit 0
           fi
           git commit -m "Aktualizovány aplikace funkcí"
+          git pull --rebase origin main
           git push
