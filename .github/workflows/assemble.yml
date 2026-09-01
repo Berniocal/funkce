@@ -1,0 +1,52 @@
+name: Sestavit aplikace funkcí
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Připravit složky
+        run: mkdir -p linearni absolutni kvadraticka
+
+      - name: Převzít aktuální funkci s absolutní hodnotou
+        run: |
+          curl --fail --location --silent --show-error \
+            https://raw.githubusercontent.com/Berniocal/fceabs/main/index.html \
+            --output absolutni/index.html
+
+      - name: Převzít aktuální kvadratické funkce
+        run: |
+          base=https://raw.githubusercontent.com/Berniocal/kvadrfce/main
+          for file in app-1.js app-2.js app-3.js app-4.js app-5.js index.html nerovnice.html nerovnice.js style.css tri-body.html tri-body.js; do
+            curl --fail --location --silent --show-error "$base/$file" --output "kvadraticka/$file"
+          done
+
+      - name: Obnovit lineární aplikaci
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, gzip
+          src = Path('_source/linearni.html.gz.b64').read_text(encoding='utf-8').strip()
+          Path('linearni/index.html').write_bytes(gzip.decompress(base64.b64decode(src)))
+          PY
+
+      - name: Uložit sestavené aplikace
+        run: |
+          git config user.name "Bernio bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add linearni absolutni kvadraticka
+          if git diff --cached --quiet; then
+            echo "Bez změn."
+            exit 0
+          fi
+          git commit -m "Aktualizovány aplikace funkcí"
+          git push
