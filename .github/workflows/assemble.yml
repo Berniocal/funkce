@@ -37,10 +37,15 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import base64, gzip
-          src = Path('_source/linearni.html.gz.b64').read_text(encoding='utf-8').strip()
-          src += '=' * ((4 - len(src) % 4) % 4)
-          data = base64.b64decode(src)
-          Path('linearni/index.html').write_bytes(gzip.decompress(data))
+          parts = sorted(Path('_source/linearni_parts').glob('part*.txt'))
+          if len(parts) != 6:
+              raise RuntimeError(f'Očekáváno 6 částí zdroje, nalezeno {len(parts)}')
+          src = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
+          data = base64.b64decode(src, validate=True)
+          html = gzip.decompress(data)
+          if not html.lstrip().lower().startswith(b'<!doctype html'):
+              raise RuntimeError('Rozbalený zdroj není HTML aplikace')
+          Path('linearni/index.html').write_bytes(html)
           PY
 
       - name: Uložit sestavené aplikace
