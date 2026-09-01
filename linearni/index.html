@@ -1,1 +1,2020 @@
-<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lineární funkce</title></head><body><p style="font-family:system-ui;padding:20px">Načítám lineární funkce…</p><script>(async()=>{try{const r=await fetch('../_source/linearni.html.gz.b64');if(!r.ok)throw new Error('source');const b64=(await r.text()).trim();const bytes=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));const html=await new Response(stream).text();document.open();document.write(html);document.close()}catch(e){document.body.innerHTML='<p style="font-family:system-ui;padding:20px;color:#b42318">Aplikaci se nepodařilo načíst.</p>';console.error(e)}})();</script></body></html>
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lineární funkce, rovnice a nerovnice</title>
+<script>
+window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},chtml:{scale:1},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root{--bg:#f4f6f8;--panel:#fff;--text:#172033;--muted:#667085;--line:#d9dee8;--accent:#5b5bd6;--soft:#ececff;--good:#087a55;--goodsoft:#ecfdf3;--grid:#e8ebf0;--axis:#697386;--c1:#5b5bd6;--c2:#c11574;--c3:#087a55;--shadow:0 10px 28px rgba(16,24,40,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1480px;margin:auto;padding:22px}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px}.hero h1{margin:0;font-size:clamp(28px,4vw,42px)}.hero p{margin:7px 0 0;color:var(--muted);max-width:900px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{min-height:42px;padding:9px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;font-weight:800}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.tabs{display:flex;gap:6px;padding:6px;background:#e9edf2;border-radius:14px;margin-bottom:18px;overflow:auto}.tab{border:0;background:transparent;padding:10px 15px;border-radius:10px;font-weight:850;color:var(--muted);white-space:nowrap}.tab.active{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(16,24,40,.08)}.view{display:none}.view.active{display:block}.layout{display:grid;grid-template-columns:minmax(320px,420px) minmax(0,1fr);gap:18px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.controls{padding:18px;position:sticky;top:12px}.content{display:grid;gap:18px}.section{padding:18px}.section h2,.controls h2{margin:0 0 12px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.field label{display:block;font-size:11px;color:var(--muted);font-weight:850;margin-bottom:4px}.field input,.field select,select{width:100%;min-height:40px;border:1px solid var(--line);border-radius:10px;padding:7px 9px;background:#fff}.eq{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--soft);margin:12px 0;text-align:center}.eq .lab{font-size:11px;text-transform:uppercase;color:var(--muted);font-weight:900}.eq .val{font-size:20px;min-height:38px}.methods{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.mbtn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-weight:800;font-size:13px}.mbtn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.hint{margin-top:10px;padding:10px 11px;border-radius:11px;background:#f8fafc;color:var(--muted);font-size:13px;line-height:1.45}.linebox{border:1px solid var(--line);border-radius:13px;padding:12px;margin-bottom:10px}.linebox h3{margin:0 0 9px;font-size:15px}.graphwrap,.numwrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}.graph{display:block;width:100%;height:auto;aspect-ratio:16/10;min-height:410px}.numline{display:block;width:100%;height:165px}.legend{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:9px}.legend span{display:inline-flex;align-items:center;gap:5px}.legend i{width:10px;height:10px;border-radius:50%}.result{background:var(--goodsoft);color:var(--good);border-radius:13px;padding:13px;text-align:center;font-weight:850}.calc details{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:9px}.calc summary{list-style:none;padding:13px 14px;font-weight:900;cursor:pointer;display:flex;justify-content:space-between}.calc summary::-webkit-details-marker{display:none}.calc summary:after{content:"+";color:var(--accent);font-size:19px}.calc details[open] summary:after{content:"−"}.body{border-top:1px solid var(--line);padding:13px}.step{background:#f8fafc;border-radius:11px;padding:11px;margin-bottom:8px;line-height:1.5}.ans{background:var(--soft);border-radius:11px;padding:12px;font-weight:800}.props{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.prop{border:1px solid var(--line);border-radius:12px;padding:11px}.prop b{display:block;font-size:11px;text-transform:uppercase;color:var(--muted)}.prop small{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.4;font-weight:500}mjx-container[display="true"]{margin:.5em 0!important;overflow-x:auto}.point{cursor:pointer}.pop{pointer-events:none}.pop rect{fill:white;stroke:var(--line);stroke-width:1.5}.pop text{font-size:14px;font-weight:900;fill:var(--text)}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.controls{position:static}}@media(max-width:700px){.app{padding:11px}.hero{flex-direction:column;align-items:flex-start}.grid2,.grid3,.grid4,.props{grid-template-columns:1fr 1fr}.graph{min-height:340px}}@media(max-width:430px){.grid2,.grid3,.grid4,.props{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero"><div><h1>Lineární funkce, rovnice a nerovnice</h1><p>Grafy lineárních funkcí, předpis z grafu, lineární rovnice a nerovnice, soustavy dvou rovnic a soustavy nerovnic. Vše krok po kroku.</p></div><div class="actions"><button class="btn" id="reset">Výchozí příklad</button><button class="btn primary" id="random">🎲 Vygenerovat</button></div></header>
+<nav class="tabs">
+<button class="tab active" data-v="graph">Graf z předpisu</button><button class="tab" data-v="inverse">Předpis z grafu</button><button class="tab" data-v="equation">Rovnice</button><button class="tab" data-v="ineq">Nerovnice</button><button class="tab" data-v="system">Soustava rovnic</button><button class="tab" data-v="ineqsys">Soustava nerovnic</button>
+</nav>
+
+<section class="view active" id="view-graph"><div class="layout"><aside class="panel controls"><h2>Předpis funkce</h2><div class="grid2"><div class="field"><label>a – směrnice</label><input id="ga" type="number" step="0.5" value="2"></div><div class="field"><label>b</label><input id="gb" type="number" step="0.5" value="-3"></div></div><div class="eq"><div class="lab">Předpis</div><div class="val" id="gform"></div></div><div class="methods"><button class="mbtn active" data-gm="slope">Směrnice a průsečík</button><button class="mbtn" data-gm="points">Dva body</button><button class="mbtn" data-gm="table">Tabulka</button></div><div class="hint" id="ghint"></div><button class="btn primary" id="ggen" style="width:100%;margin-top:12px">🎲 Nová funkce</button></aside><main class="content"><section class="panel section"><h2>Graf</h2><div class="graphwrap"><svg class="graph" id="ggraph" viewBox="0 0 900 560"></svg></div></section><section class="panel section"><h2>Postup konstrukce</h2><div class="calc" id="gcalc"></div></section><section class="panel section"><h2>Vlastnosti</h2><div class="props" id="gprops"></div></section></main></div></section>
+
+<section class="view" id="view-inverse"><div class="layout"><aside class="panel controls"><h2>Předpis z grafu</h2><div class="hint" id="ihint">Každý bod přímky musí splňovat předpis f(x)=ax+b. Dosazením dvou bodů proto dostaneme dvě rovnice pro dvě neznámé a, b.</div><div class="grid2" style="margin-top:12px"><div class="field"><label>a</label><input id="ia" type="number" step="0.5" value="1.5"></div><div class="field"><label>b</label><input id="ib" type="number" step="0.5" value="-2"></div><div class="field"><label>x₁</label><input id="ix1" type="number" step="1" value="-2"></div><div class="field"><label>x₂</label><input id="ix2" type="number" step="1" value="2"></div></div><div class="eq"><div class="lab">Zadané body</div><div class="val" id="ipoints"></div></div><div class="methods"><button class="mbtn active" data-im="system">Soustava rovnic</button><button class="mbtn" data-im="slope">Vzorec pro směrnici</button></div><button class="btn primary" id="igen" style="width:100%;margin-top:12px">🎲 Nový příklad</button></aside><main class="content"><section class="panel section"><h2>Graf</h2><div class="graphwrap"><svg class="graph" id="igraph" viewBox="0 0 900 560"></svg></div></section><section class="panel section"><h2>Výpočet předpisu</h2><div class="calc" id="icalc"></div></section></main></div></section>
+
+<section class="view" id="view-equation"><div class="layout"><aside class="panel controls"><h2>Lineární rovnice</h2><div class="linebox"><h3>Levá strana ax+b</h3><div class="grid2"><div class="field"><label>a</label><input id="ea" type="number" value="3"></div><div class="field"><label>b</label><input id="eb" type="number" value="-2"></div></div></div><div class="linebox"><h3>Pravá strana cx+d</h3><div class="grid2"><div class="field"><label>c</label><input id="ec" type="number" value="1"></div><div class="field"><label>d</label><input id="ed" type="number" value="6"></div></div></div><div class="eq"><div class="lab">Rovnice</div><div class="val" id="eform"></div></div><button class="btn primary" id="egen" style="width:100%">🎲 Nová rovnice</button></aside><main class="content"><section class="panel section"><h2>Grafická kontrola</h2><div class="graphwrap"><svg class="graph" id="egraph" viewBox="0 0 900 560"></svg></div><div class="legend"><span><i style="background:var(--c1)"></i>f(x)</span><span><i style="background:var(--c2)"></i>g(x)</span></div></section><section class="panel section"><div class="result" id="eres"></div></section><section class="panel section"><h2>Řešení krok po kroku</h2><div class="calc" id="ecalc"></div></section></main></div></section>
+
+<section class="view" id="view-ineq"><div class="layout"><aside class="panel controls"><h2>Lineární nerovnice</h2><div class="linebox"><h3>Levá strana ax+b</h3><div class="grid2"><div class="field"><label>a</label><input id="na" type="number" value="-2"></div><div class="field"><label>b</label><input id="nb" type="number" value="5"></div></div></div><div class="field"><label>Znaménko</label><select id="nop"><option value="<"><</option><option value="<=">≤</option><option value=">">></option><option value=">=">≥</option></select></div><div class="linebox" style="margin-top:10px"><h3>Pravá strana cx+d</h3><div class="grid2"><div class="field"><label>c</label><input id="nc" type="number" value="1"></div><div class="field"><label>d</label><input id="nd" type="number" value="-1"></div></div></div><div class="eq"><div class="lab">Nerovnice</div><div class="val" id="nform"></div></div><button class="btn primary" id="ngen" style="width:100%">🎲 Nová nerovnice</button></aside><main class="content"><section class="panel section"><h2>Grafické řešení</h2><div class="graphwrap"><svg class="graph" id="ngraph" viewBox="0 0 900 560"></svg></div></section><section class="panel section"><div class="result" id="nres"></div></section><section class="panel section"><h2>Číselná osa</h2><div class="numwrap"><svg class="numline" id="nline" viewBox="0 0 900 165"></svg></div></section><section class="panel section"><h2>Řešení krok po kroku</h2><div class="calc" id="ncalc"></div></section></main></div></section>
+
+<section class="view" id="view-system"><div class="layout"><aside class="panel controls"><h2>Soustava dvou rovnic</h2><div class="linebox"><h3>1. rovnice a₁x+b₁y=c₁</h3><div class="grid3"><div class="field"><label>a₁</label><input id="sa1" type="number" value="2"></div><div class="field"><label>b₁</label><input id="sb1" type="number" value="1"></div><div class="field"><label>c₁</label><input id="sc1" type="number" value="7"></div></div></div><div class="linebox"><h3>2. rovnice a₂x+b₂y=c₂</h3><div class="grid3"><div class="field"><label>a₂</label><input id="sa2" type="number" value="1"></div><div class="field"><label>b₂</label><input id="sb2" type="number" value="-1"></div><div class="field"><label>c₂</label><input id="sc2" type="number" value="2"></div></div></div><div class="eq"><div class="lab">Soustava rovnic</div><div class="val" id="sform"></div></div><div class="methods"><button class="mbtn active" data-sm="elim">Sčítací</button><button class="mbtn" data-sm="subst">Dosazovací</button><button class="mbtn" data-sm="graph">Grafická</button></div><div class="hint" id="shint"></div><button class="btn primary" id="sgen" style="width:100%;margin-top:12px">🎲 Nová soustava</button></aside><main class="content"><section class="panel section"><h2>Graf soustavy</h2><div class="graphwrap"><svg class="graph" id="sgraph" viewBox="0 0 900 560"></svg></div></section><section class="panel section"><div class="result" id="sres"></div></section><section class="panel section"><h2>Řešení krok po kroku</h2><div class="calc" id="scalc"></div></section></main></div></section>
+
+<section class="view" id="view-ineqsys"><div class="layout"><aside class="panel controls"><h2>Soustava nerovnic</h2><div class="linebox"><h3>1. nerovnice: a₁x+b₁y ? c₁</h3><div class="grid4"><div class="field"><label>a₁ u x</label><input id="qa1" type="number" value="2"></div><div class="field"><label>b₁ u y</label><input id="qb1" type="number" value="1"></div><div class="field"><label>znaménko</label><select id="qop1"><option value="<">&lt;</option><option value="<=" selected>≤</option><option value=">">&gt;</option><option value=">=">≥</option></select></div><div class="field"><label>c₁</label><input id="qr1" type="number" value="4"></div></div></div><div class="linebox"><h3>2. nerovnice: a₂x+b₂y ? c₂</h3><div class="grid4"><div class="field"><label>a₂ u x</label><input id="qa2" type="number" value="-1"></div><div class="field"><label>b₂ u y</label><input id="qb2" type="number" value="2"></div><div class="field"><label>znaménko</label><select id="qop2"><option value="<">&lt;</option><option value="<=">≤</option><option value=">">&gt;</option><option value=">=" selected>≥</option></select></div><div class="field"><label>c₂</label><input id="qr2" type="number" value="-2"></div></div></div><div class="eq"><div class="lab">Soustava nerovnic</div><div class="val" id="qform"></div></div><div class="hint">Každá nerovnice určuje jednu polorovinu. Nejprve nakreslíme její hraniční přímku, potom pomocí testovacího bodu určíme správnou stranu. Řešením soustavy je společná část obou polorovin.</div><button class="btn primary" id="qgen" style="width:100%;margin-top:12px">🎲 Nová soustava</button></aside><main class="content"><section class="panel section"><h2>Grafické řešení soustavy</h2><div class="graphwrap"><svg class="graph" id="qgraph" viewBox="0 0 900 560"></svg></div><div class="legend"><span><i style="background:var(--c1)"></i>1. polorovina</span><span><i style="background:var(--c2)"></i>2. polorovina</span><span><i style="background:var(--c3)"></i>průnik – řešení</span></div></section><section class="panel section"><div class="result" id="qres"></div></section><section class="panel section"><h2>Řešení krok po kroku</h2><div class="calc" id="qcalc"></div></section></main></div></section>
+</div>
+<script>
+
+(()=>{
+const E=1e-9;
+const $=id=>document.getElementById(id);
+
+function cl(n){
+  if(Math.abs(n)<E) return 0;
+  return Math.round(n*1e8)/1e8;
+}
+
+function fmt(n){
+  n=cl(n);
+  return (Number.isInteger(n)?String(n):String(Math.round(n*1000)/1000))
+    .replace('-','−')
+    .replace('.',',');
+}
+
+function tn(n){
+  n=cl(n);
+  return (Number.isInteger(n)?String(n):String(Math.round(n*1000)/1000))
+    .replace('.','{,}');
+}
+
+const md=t=>`\\[${t}\\]`;
+const mi=t=>`\\(${t}\\)`;
+
+function ot(o){
+  // Prázdná skupina {} bezpečně oddělí TeXový příkaz od následujícího
+  // písmene. Bez ní může například \lt + x vzniknout jako neplatné \ltx.
+  return o==='<='?'\\le{}':o==='>='?'\\ge{}':o==='<'?'\\lt{}':'\\gt{}';
+}
+
+function ts(n,body,first=false){
+  n=cl(n);
+  if(Math.abs(n)<E) return '';
+
+  const neg=n<0;
+  const a=Math.abs(n);
+  const coeff=body&&Math.abs(a-1)<E?'':tn(a);
+  const term=coeff+body;
+
+  return first
+    ?(neg?'-':'')+term
+    :(neg?' - ':' + ')+term;
+}
+
+function tl(a,b){
+  let out='';
+
+  if(Math.abs(a)>=E){
+    out=ts(a,'x',true);
+  }
+
+  if(Math.abs(b)>=E||!out){
+    out+=ts(b,'',!out);
+  }
+
+  return out||'0';
+}
+
+function tvars(a,varA,b,varB){
+  let out='';
+
+  if(Math.abs(a)>=E){
+    out=ts(a,varA,true);
+  }
+
+  if(Math.abs(b)>=E){
+    out+=ts(b,varB,!out);
+  }
+
+  return out||'0';
+}
+
+function t2(a,b,c){
+  return `${tvars(a,'x',b,'y')}=${tn(c)}`;
+}
+
+function tAB(x,y){
+  return `${tvars(x,'a',1,'b')}=${tn(y)}`;
+}
+
+function texEvalLinear(a,b,x){
+  let expr='';
+
+  if(Math.abs(a)>=E){
+    expr=`${tn(a)}\\cdot(${tn(x)})`;
+  }
+
+  if(Math.abs(b)>=E){
+    expr+=b<0
+      ?`-${tn(Math.abs(b))}`
+      :`+${tn(b)}`;
+  }
+
+  if(!expr) expr='0';
+
+  return `${expr}=${tn(a*x+b)}`;
+}
+
+function st(h){
+  return `<div class="step">${h}</div>`;
+}
+
+function an(h){
+  return `<div class="ans">${h}</div>`;
+}
+
+function det(title,body){
+  return `<details><summary>${title}</summary><div class="body">${body}</div></details>`;
+}
+
+// ------------------------------------------------------------------
+// MathJax
+// ------------------------------------------------------------------
+let mp=Promise.resolve();
+let mf=0;
+
+function types(targets){
+  if(!window.MathJax?.typesetPromise) return;
+
+  if(mf) cancelAnimationFrame(mf);
+
+  mf=requestAnimationFrame(()=>{
+    mf=0;
+    targets=targets.filter(Boolean);
+
+    mp=mp
+      .then(()=>{
+        window.MathJax.typesetClear?.(targets);
+        return window.MathJax.typesetPromise(targets);
+      })
+      .catch(()=>{});
+  });
+}
+
+// ------------------------------------------------------------------
+// Graf
+// ------------------------------------------------------------------
+function nice(span){
+  const raw=span/10;
+  const pow=Math.pow(10,Math.floor(Math.log10(raw)));
+  const m=raw/pow;
+
+  return (m<1.5?1:m<3.5?2:m<7.5?5:10)*pow;
+}
+
+function graph(svg,funcs,o={}){
+  const W=900,H=560,L=52,R=34,T=28,B=42;
+  const x0=o.x0??-8;
+  const x1=o.x1??8;
+
+  const ys=[0];
+
+  funcs.forEach(f=>{
+    for(let i=0;i<=300;i++){
+      const x=x0+(x1-x0)*i/300;
+      const y=f.fn(x);
+
+      if(Number.isFinite(y)){
+        ys.push(y);
+      }
+    }
+  });
+
+  let y0=Math.min(...ys);
+  let y1=Math.max(...ys);
+
+  if(y1-y0<8){
+    const mid=(y0+y1)/2;
+    y0=mid-4;
+    y1=mid+4;
+  }else{
+    const span=y1-y0;
+    y0-=span*.08;
+    y1+=span*.08;
+  }
+
+  const sx=x=>L+(x-x0)/(x1-x0)*(W-L-R);
+  const sy=y=>H-B-(y-y0)/(y1-y0)*(H-T-B);
+
+  const ax=sx(0);
+  const ay=sy(0);
+
+  let out=[`<rect width="${W}" height="${H}" fill="white"/>`];
+
+  (o.sh||[]).forEach(q=>{
+    const a=q.from===-Infinity?x0:Math.max(x0,q.from);
+    const b=q.to===Infinity?x1:Math.min(x1,q.to);
+
+    if(b>a){
+      out.push(
+        `<rect x="${sx(a)}" y="${T}" width="${sx(b)-sx(a)}" height="${H-T-B}" fill="var(--soft)" opacity=".9"/>`
+      );
+    }
+  });
+
+  const xs=nice(x1-x0);
+  const yy=nice(y1-y0);
+
+  for(let x=Math.ceil(x0/xs)*xs;x<=x1+E;x+=xs){
+    out.push(
+      `<line x1="${sx(x)}" y1="${T}" x2="${sx(x)}" y2="${H-B}" stroke="var(--grid)"/>`
+    );
+
+    out.push(
+      `<text x="${sx(x)}" y="${y0<=0&&y1>=0?ay+18:H-B+18}" text-anchor="middle" font-size="12" fill="var(--axis)">${fmt(x)}</text>`
+    );
+  }
+
+  for(let y=Math.ceil(y0/yy)*yy;y<=y1+E;y+=yy){
+    out.push(
+      `<line x1="${L}" y1="${sy(y)}" x2="${W-R}" y2="${sy(y)}" stroke="var(--grid)"/>`
+    );
+
+    out.push(
+      `<text x="${x0<=0&&x1>=0?ax-10:L-8}" y="${sy(y)+4}" text-anchor="end" font-size="12" fill="var(--axis)">${fmt(y)}</text>`
+    );
+  }
+
+  if(x0<=0&&x1>=0){
+    out.push(
+      `<line x1="${ax}" y1="${T}" x2="${ax}" y2="${H-B}" stroke="var(--axis)" stroke-width="1.8"/>`
+    );
+  }
+
+  if(y0<=0&&y1>=0){
+    out.push(
+      `<line x1="${L}" y1="${ay}" x2="${W-R}" y2="${ay}" stroke="var(--axis)" stroke-width="1.8"/>`
+    );
+  }
+
+  const colors=['var(--c1)','var(--c2)','var(--c3)'];
+
+  funcs.forEach((f,k)=>{
+    let d='';
+
+    for(let i=0;i<=800;i++){
+      const x=x0+(x1-x0)*i/800;
+      const y=f.fn(x);
+
+      if(!Number.isFinite(y)) continue;
+
+      d+=(d?' L ':'M ')+sx(x)+' '+sy(y);
+    }
+
+    out.push(
+      `<path d="${d}" fill="none" stroke="${f.c||colors[k%3]}" stroke-width="${f.w||4}" stroke-linecap="round"/>`
+    );
+  });
+
+  (o.v||[]).forEach((v,k)=>{
+    if(v.x<x0||v.x>x1) return;
+
+    const px=sx(v.x);
+
+    out.push(
+      `<line x1="${px}" y1="${T}" x2="${px}" y2="${H-B}" stroke="${v.c||colors[k%3]}" stroke-width="${v.w||4}"/>`
+    );
+  });
+
+  (o.p||[]).forEach(p=>{
+    out.push(
+      `<circle class="point" data-x="${cl(p.x)}" data-y="${cl(p.y)}" cx="${sx(p.x)}" cy="${sy(p.y)}" r="6" fill="${p.c||'var(--c3)'}" stroke="white" stroke-width="2"/>`
+    );
+
+    if(p.lab){
+      out.push(
+        `<text x="${sx(p.x)+9}" y="${sy(p.y)-10}" font-size="12" font-weight="800" fill="${p.c||'var(--c3)'}" paint-order="stroke" stroke="white" stroke-width="4">${p.lab}</text>`
+      );
+    }
+  });
+
+  svg.innerHTML=out.join('');
+  points(svg);
+}
+
+function points(svg){
+  if(svg.dataset.p) return;
+
+  svg.dataset.p=1;
+
+  svg.addEventListener('click',e=>{
+    svg.querySelectorAll('.pop').forEach(n=>n.remove());
+
+    const c=e.target.closest?.('.point');
+    if(!c) return;
+
+    const x=+c.dataset.x;
+    const y=+c.dataset.y;
+    const cx=+c.getAttribute('cx');
+    const cy=+c.getAttribute('cy');
+
+    const NS='http://www.w3.org/2000/svg';
+    const g=document.createElementNS(NS,'g');
+    const r=document.createElementNS(NS,'rect');
+    const t=document.createElementNS(NS,'text');
+
+    const txt=`[${fmt(x)};${fmt(y)}]`;
+    const w=Math.max(72,txt.length*8+18);
+
+    g.setAttribute('class','pop');
+
+    r.setAttribute('x',cx+12);
+    r.setAttribute('y',cy-40);
+    r.setAttribute('width',w);
+    r.setAttribute('height',30);
+    r.setAttribute('rx',8);
+
+    t.setAttribute('x',cx+12+w/2);
+    t.setAttribute('y',cy-20);
+    t.setAttribute('text-anchor','middle');
+    t.textContent=txt;
+
+    g.append(r,t);
+    svg.append(g);
+  });
+}
+
+// ------------------------------------------------------------------
+// Číselná osa
+// ------------------------------------------------------------------
+function num(svg,sets){
+  const W=900,H=165,P=70;
+  const finite=[];
+
+  sets.forEach(s=>{
+    if(Number.isFinite(s.from)) finite.push(s.from);
+    if(Number.isFinite(s.to)) finite.push(s.to);
+  });
+
+  let mn=finite.length?Math.floor(Math.min(...finite)-4):-6;
+  let mx=finite.length?Math.ceil(Math.max(...finite)+4):6;
+
+  if(mx-mn<8){
+    const mid=(mx+mn)/2;
+    mn=Math.floor(mid-4);
+    mx=Math.ceil(mid+4);
+  }
+
+  const sx=x=>P+(x-mn)/(mx-mn)*(W-2*P);
+  const y=92;
+
+  let out=[
+    `<rect width="${W}" height="${H}" fill="white"/>`,
+    `<line x1="${P}" y1="${y}" x2="${W-P}" y2="${y}" stroke="var(--axis)" stroke-width="2"/>`,
+    `<path d="M ${W-P} ${y} l -10 -6 l 0 12 z" fill="var(--axis)"/>`
+  ];
+
+  const sp=nice(mx-mn);
+  const colors=['var(--c1)','var(--c2)','var(--c3)'];
+
+  for(let x=Math.ceil(mn/sp)*sp;x<=mx+E;x+=sp){
+    out.push(
+      `<line x1="${sx(x)}" y1="${y-6}" x2="${sx(x)}" y2="${y+6}" stroke="var(--axis)"/>`
+    );
+
+    out.push(
+      `<text x="${sx(x)}" y="${y+25}" text-anchor="middle" font-size="12" fill="var(--axis)">${fmt(x)}</text>`
+    );
+  }
+
+  sets.forEach((s,k)=>{
+    const yy=45+k*18;
+    const a=s.from===-Infinity?mn:s.from;
+    const b=s.to===Infinity?mx:s.to;
+    const color=s.c||colors[k%3];
+
+    out.push(
+      `<line x1="${sx(a)}" y1="${yy}" x2="${sx(b)}" y2="${yy}" stroke="${color}" stroke-width="7" stroke-linecap="round"/>`
+    );
+
+    if(Number.isFinite(s.from)){
+      out.push(
+        `<circle cx="${sx(s.from)}" cy="${yy}" r="7" fill="${s.fc?color:'white'}" stroke="${color}" stroke-width="3"/>`
+      );
+    }
+
+    if(Number.isFinite(s.to)){
+      out.push(
+        `<circle cx="${sx(s.to)}" cy="${yy}" r="7" fill="${s.tc?color:'white'}" stroke="${color}" stroke-width="3"/>`
+      );
+    }
+  });
+
+  svg.innerHTML=out.join('');
+}
+
+// ------------------------------------------------------------------
+// 1) Graf z předpisu
+// ------------------------------------------------------------------
+let gm='slope';
+
+function RG(){
+  const a=+$('ga').value;
+  const b=+$('gb').value;
+  const f=x=>a*x+b;
+
+  $('gform').innerHTML=md(`f(x)=${tl(a,b)}`);
+
+  let p=[];
+  let body='';
+
+  if(gm==='slope'){
+    const A={x:0,y:b};
+    const B={x:1,y:a+b};
+
+    p=[
+      {x:A.x,y:A.y,lab:'A'},
+      {x:B.x,y:B.y,lab:'B'}
+    ];
+
+    $('ghint').textContent=
+      'Nejprve určíme průsečík s osou y. Potom použijeme směrnici a jako změnu y při změně x o 1.';
+
+    body=
+      st(`<strong>1.</strong> Na ose y platí ${mi('x=0')}. Proto do předpisu dosadíme nulu:
+        ${md(`f(0)=${tn(a)}\\cdot0${b<0?'-':'+'}${tn(Math.abs(b))}=${tn(b)}`)}
+        Průsečík s osou y je tedy
+        ${md(`A=[0;${tn(b)}]`)}`)+
+
+      st(`<strong>2.</strong> Koeficient ${mi('a')} je směrnice:
+        ${md(`a=${tn(a)}`)}
+        Směrnice říká, o kolik se změní y, když se x zvětší o 1:
+        ${md(`\\Delta x=1,\\qquad \\Delta y=a=${tn(a)}`)}`)+
+
+      st(`<strong>3.</strong> Z bodu A se posuneme o 1 doprava:
+        ${md(`x_B=0+1=1`)}
+        a o ${mi(`a=${tn(a)}`)} ve svislém směru:
+        ${md(`y_B=${tn(b)}+(${tn(a)})=${tn(a+b)}`)}
+        ${md(`B=[1;${tn(a+b)}]`)}`)+
+
+      an('Body A a B spojíme přímkou.');
+
+  }else if(gm==='points'){
+    const x1=-2;
+    const x2=2;
+    const y1=f(x1);
+    const y2=f(x2);
+
+    p=[
+      {x:x1,y:y1,lab:'A'},
+      {x:x2,y:y2,lab:'B'}
+    ];
+
+    $('ghint').textContent=
+      'Přímku určují dva různé body. Zvolíme dvě hodnoty x, dopočítáme f(x) a body spojíme.';
+
+    body=
+      st(`<strong>1.</strong> Zvolíme například ${mi(`x_1=${tn(x1)}`)} a dosadíme do předpisu:
+        ${md(`f(${tn(x1)})=${texEvalLinear(a,b,x1)}`)}
+        ${md(`A=[${tn(x1)};${tn(y1)}]`)}`)+
+
+      st(`<strong>2.</strong> Zvolíme druhou hodnotu ${mi(`x_2=${tn(x2)}`)}:
+        ${md(`f(${tn(x2)})=${texEvalLinear(a,b,x2)}`)}
+        ${md(`B=[${tn(x2)};${tn(y2)}]`)}`)+
+
+      an('Dva různé body A a B spojíme přímkou.');
+
+  }else{
+    const xs=[-2,-1,0,1,2];
+
+    const rows=xs.map(x=>{
+      p.push({x,y:f(x)});
+
+      return `<tr>
+        <td style="padding:7px">${fmt(x)}</td>
+        <td style="padding:7px">${fmt(f(x))}</td>
+      </tr>`;
+    }).join('');
+
+    $('ghint').textContent=
+      'Zvolíme několik hodnot x, každou zvlášť dosadíme do předpisu a vypočítané body proložíme přímkou.';
+
+    let calculations='';
+
+    xs.forEach((x,i)=>{
+      calculations+=st(`<strong>${i+1}.</strong> Pro ${mi(`x=${tn(x)}`)}:
+        ${md(`f(${tn(x)})=${texEvalLinear(a,b,x)}`)}
+        Dostaneme bod
+        ${md(`[${tn(x)};${tn(f(x))}]`)}`);
+    });
+
+    body=
+      calculations+
+      `<table style="width:100%;text-align:center;border-collapse:collapse">
+        <tr>
+          <th style="padding:8px;border-bottom:1px solid var(--line)">x</th>
+          <th style="padding:8px;border-bottom:1px solid var(--line)">f(x)</th>
+        </tr>
+        ${rows}
+      </table>`+
+      an('Vypočítané body leží na jedné přímce. Body proložíme přímkou.');
+  }
+
+  graph(
+    $('ggraph'),
+    [{fn:f}],
+    {p}
+  );
+
+  $('gcalc').innerHTML=det('Postup konstrukce',body);
+
+  let zeroValue;
+  let zeroExplain;
+
+  if(Math.abs(a)<E){
+    if(Math.abs(b)<E){
+      zeroValue='celá osa x';
+      zeroExplain='Funkce je stále rovna nule, takže její graf splývá s osou x.';
+    }else{
+      zeroValue='žádný';
+      zeroExplain='Konstantní nenulová funkce osu x neprotíná.';
+    }
+  }else{
+    const x0=cl(-b/a);
+    zeroValue=`[${fmt(x0)};0]`;
+    zeroExplain=`Na ose x je y=0, proto položíme f(x)=0. Vyjde x=${fmt(x0)}, takže průsečík je [${fmt(x0)};0].`;
+  }
+
+  const rangeValue=Math.abs(a)<E?`{${fmt(b)}}`:'ℝ';
+  const rangeExplain=Math.abs(a)<E
+    ?`Funkce je konstantní, takže nabývá pouze hodnoty ${fmt(b)}.`
+    :'Přímka není vodorovná, proto při změně x nabývá všech reálných hodnot y.';
+
+  $('gprops').innerHTML=
+    `<div class="prop">
+      <b>Definiční obor</b>
+      ℝ
+      <small>Do předpisu ax+b můžeme dosadit libovolné reálné x.</small>
+    </div>`+
+
+    `<div class="prop">
+      <b>Obor hodnot</b>
+      ${rangeValue}
+      <small>${rangeExplain}</small>
+    </div>`+
+
+    `<div class="prop">
+      <b>Monotónnost</b>
+      ${a>0?'rostoucí':a<0?'klesající':'konstantní'}
+      <small>${a>0?'Směrnice a je kladná, proto při růstu x roste i f(x).':a<0?'Směrnice a je záporná, proto při růstu x hodnota f(x) klesá.':'Směrnice je 0, takže se hodnota funkce nemění.'}</small>
+    </div>`+
+
+    `<div class="prop">
+      <b>Průsečík s osou x</b>
+      ${zeroValue}
+      <small>${zeroExplain}</small>
+    </div>`+
+
+    `<div class="prop">
+      <b>Průsečík s osou y</b>
+      [0;${fmt(b)}]
+      <small>Na ose y je x=0. Proto f(0)=a·0+b=b.</small>
+    </div>`+
+
+    `<div class="prop">
+      <b>Směrnice</b>
+      ${fmt(a)}
+      <small>Směrnice udává změnu y při změně x o 1: Δy/Δx=a.</small>
+    </div>`;
+
+  types([
+    $('gform'),
+    $('gcalc')
+  ]);
+}
+
+// ------------------------------------------------------------------
+// 2) Předpis z grafu
+// ------------------------------------------------------------------
+let im='system';
+
+function RI(){
+  let a=+$('ia').value;
+  let b=+$('ib').value;
+  let x1=+$('ix1').value;
+  let x2=+$('ix2').value;
+
+  if(Math.abs(x1-x2)<E){
+    x2=x1+2;
+    $('ix2').value=x2;
+  }
+
+  const y1=cl(a*x1+b);
+  const y2=cl(a*x2+b);
+  const f=x=>a*x+b;
+
+  $('ipoints').innerHTML=md(
+    `A=[${tn(x1)};${tn(y1)}],\\qquad B=[${tn(x2)};${tn(y2)}]`
+  );
+
+  graph(
+    $('igraph'),
+    [{fn:f}],
+    {
+      p:[
+        {x:x1,y:y1,lab:'A'},
+        {x:x2,y:y2,lab:'B',c:'var(--c2)'}
+      ]
+    }
+  );
+
+  let body='';
+
+  if(im==='system'){
+    $('ihint').textContent=
+      'Každý bod přímky musí splňovat předpis f(x)=ax+b. Dosazením bodů A a B dostaneme dvě rovnice pro dvě neznámé a, b.';
+
+    const dx=cl(x2-x1);
+    const dy=cl(y2-y1);
+
+    body=
+      st(`<strong>1.</strong> Hledáme předpis ve tvaru
+        ${md(`f(x)=ax+b`)}
+        Neznámé jsou koeficienty ${mi('a')} a ${mi('b')}.`)+
+
+      st(`<strong>2.</strong> Dosadíme bod A:
+        ${md(`${tn(y1)}=${tvars(x1,'a',1,'b')}`)}
+        tedy
+        ${md(`${tAB(x1,y1)}`)}`)+
+
+      st(`<strong>3.</strong> Dosadíme bod B:
+        ${md(`${tn(y2)}=${tvars(x2,'a',1,'b')}`)}
+        tedy
+        ${md(`${tAB(x2,y2)}`)}`)+
+
+      st(`<strong>4.</strong> Dostaneme soustavu dvou rovnic o dvou neznámých:
+        ${md(`\\begin{aligned}
+          ${tAB(x1,y1)}\\\\
+          ${tAB(x2,y2)}
+        \\end{aligned}`)}
+        Protože u ${mi('b')} je v obou rovnicích stejný koeficient 1, rovnice odečteme.`)+
+
+      st(`<strong>5.</strong> Odečteme první rovnici od druhé:
+        ${md(`${tn(dx)}a=${tn(dy)}`)}
+        ${md(`a=\\frac{${tn(dy)}}{${tn(dx)}}=${tn(a)}`)}`)+
+
+      st(`<strong>6.</strong> Nalezené ${mi(`a=${tn(a)}`)} dosadíme například do rovnice bodu A:
+        ${md(`${tn(y1)}=${tn(a)}\\cdot(${tn(x1)})+b`)}
+        ${md(`b=${tn(b)}`)}`)+
+
+      an(`Hledaný předpis:
+        ${md(`\\boxed{f(x)=${tl(a,b)}}`)}`);
+
+  }else{
+    $('ihint').textContent=
+      'Druhá možnost: nejprve ze dvou bodů spočítáme směrnici a a potom z jednoho bodu dopočítáme b.';
+
+    const dx=cl(x2-x1);
+    const dy=cl(y2-y1);
+
+    body=
+      st(`<strong>1.</strong> Použijeme vztah pro směrnici:
+        ${md(`a=\\frac{y_2-y_1}{x_2-x_1}`)}`)+
+
+      st(`<strong>2.</strong> Dosadíme souřadnice bodů:
+        ${md(`a=\\frac{${tn(y2)}-${tn(y1)}}{${tn(x2)}-${tn(x1)}}`)}
+        ${md(`a=\\frac{${tn(dy)}}{${tn(dx)}}=${tn(a)}`)}`)+
+
+      st(`<strong>3.</strong> Nyní použijeme
+        ${md(`f(x)=ax+b`)}
+        a dosadíme například bod A:
+        ${md(`${tn(y1)}=${tn(a)}\\cdot(${tn(x1)})+b`)}
+        ${md(`b=${tn(b)}`)}`)+
+
+      an(`Hledaný předpis:
+        ${md(`\\boxed{f(x)=${tl(a,b)}}`)}`);
+  }
+
+  $('icalc').innerHTML=det(
+    im==='system'
+      ?'1. metoda – soustava dvou rovnic'
+      :'2. metoda – vzorec pro směrnici',
+    body
+  );
+
+  types([
+    $('ipoints'),
+    $('icalc')
+  ]);
+}
+
+// ------------------------------------------------------------------
+// Nerovnice – algebraická pomocná logika
+// ------------------------------------------------------------------
+function solve(a,b,o,c,d){
+  const A=cl(a-c);
+  const B=cl(d-b);
+
+  if(Math.abs(A)<E){
+    const ok=
+      o==='<'?0<B:
+      o==='<='?0<=B:
+      o==='>'?0>B:
+      0>=B;
+
+    return {
+      type:ok?'all':'none',
+      A,B,o
+    };
+  }
+
+  let no=o;
+
+  if(A<0){
+    no=
+      o==='<'?'>':
+      o==='<='?'>=':
+      o==='>'?'<':
+      '<=';
+  }
+
+  return {
+    type:'bound',
+    A,B,o,no,
+    v:cl(B/A)
+  };
+}
+
+function sett(s){
+  if(s.type==='all'){
+    return {
+      a:[{from:-Infinity,to:Infinity}],
+      t:'\\mathbb{R}'
+    };
+  }
+
+  if(s.type==='none'){
+    return {
+      a:[],
+      t:'\\varnothing'
+    };
+  }
+
+  const v=s.v;
+
+  if(s.no==='<'){
+    return {
+      a:[{from:-Infinity,to:v,tc:false}],
+      t:`(-\\infty;${tn(v)})`
+    };
+  }
+
+  if(s.no==='<='){
+    return {
+      a:[{from:-Infinity,to:v,tc:true}],
+      t:`(-\\infty;${tn(v)}\\rangle`
+    };
+  }
+
+  if(s.no==='>'){
+    return {
+      a:[{from:v,to:Infinity,fc:false}],
+      t:`(${tn(v)};+\\infty)`
+    };
+  }
+
+  return {
+    a:[{from:v,to:Infinity,fc:true}],
+    t:`\\langle${tn(v)};+\\infty)`
+  };
+}
+
+// ------------------------------------------------------------------
+// 3) Rovnice
+// ------------------------------------------------------------------
+function RE(){
+  const a=+$('ea').value;
+  const b=+$('eb').value;
+  const c=+$('ec').value;
+  const d=+$('ed').value;
+
+  const A=cl(a-c);
+  const B=cl(d-b);
+
+  const f=x=>a*x+b;
+  const g=x=>c*x+d;
+
+  $('eform').innerHTML=md(
+    `${tl(a,b)}=${tl(c,d)}`
+  );
+
+  let body='';
+  let graphBody='';
+  let res='';
+  let p=[];
+
+  if(Math.abs(A)>=E){
+    const x=cl(B/A);
+    const y=cl(f(x));
+
+    p=[{
+      x,y,
+      lab:'S'
+    }];
+
+    body=
+      st(`<strong>1.</strong> Začneme rovnicí:
+        ${md(`${tl(a,b)}=${tl(c,d)}`)}`)+
+
+      st(`<strong>2.</strong> Členy s x převedeme na levou stranu a čísla na pravou:
+        ${md(`${tn(A)}x=${tn(B)}`)}`)+
+
+      st(`<strong>3.</strong> Vyjádříme x:
+        ${md(`x=\\frac{${tn(B)}}{${tn(A)}}=${tn(x)}`)}`)+
+
+      an(`${md(`K=\\{${tn(x)}\\}`)}`);
+
+    res=md(`x=${tn(x)}`);
+
+    graphBody=
+      st(`<strong>1.</strong> Levou a pravou stranu rovnice chápeme jako dvě funkce:
+        ${md(`f(x)=${tl(a,b)}`)}
+        ${md(`g(x)=${tl(c,d)}`)}`)+
+
+      st(`<strong>2.</strong> Původní rovnice říká
+        ${md(`f(x)=g(x)`)}
+        Hledáme tedy takové x, pro které mají oba grafy stejnou y-ovou souřadnici. To nastane právě v jejich průsečíku.`)+
+
+      st(`<strong>3.</strong> V grafu se přímky protínají v bodě
+        ${md(`S=[${tn(x)};${tn(y)}]`)}
+        Souřadnici y můžeme ověřit:
+        ${md(`f(${tn(x)})=g(${tn(x)})=${tn(y)}`)}`)+
+
+      an(`Řešením rovnice je <strong>x-ová souřadnice průsečíku</strong>:
+        ${md(`x=${tn(x)}`)}`);
+
+  }else if(Math.abs(B)<E){
+    body=
+      st(`Po úpravě dostaneme
+        ${md(`0x=0`)}`)+
+      st('Tato rovnost platí pro každé reálné x.')+
+      an(`${md(`K=\\mathbb{R}`)}`);
+
+    res=md(`K=\\mathbb{R}`);
+
+    graphBody=
+      st(`Obě strany rovnice určují stejnou lineární funkci:
+        ${md(`f(x)=${tl(a,b)}`)}
+        ${md(`g(x)=${tl(c,d)}`)}`)+
+      st('Jejich grafy proto splývají. Každý bod jedné přímky je zároveň bodem druhé.')+
+      an(`Pro každé reálné x platí f(x)=g(x), proto
+        ${md(`K=\\mathbb{R}`)}`);
+
+  }else{
+    body=
+      st(`Po úpravě dostaneme
+        ${md(`0x=${tn(B)}`)}`)+
+      st('Levá strana je vždy 0, ale pravá je nenulová. Rovnost tedy nemůže platit.')+
+      an(`${md(`K=\\varnothing`)}`);
+
+    res=md(`K=\\varnothing`);
+
+    graphBody=
+      st(`Grafy funkcí jsou:
+        ${md(`f(x)=${tl(a,b)}`)}
+        ${md(`g(x)=${tl(c,d)}`)}`)+
+      st(`Obě přímky mají stejnou směrnici, ale jiný průsečík s osou y. Jsou tedy rovnoběžné a nemají žádný průsečík.`)+
+      an(`Neexistuje x, pro které by platilo f(x)=g(x), proto
+        ${md(`K=\\varnothing`)}`);
+  }
+
+  graph(
+    $('egraph'),
+    [
+      {fn:f},
+      {fn:g,c:'var(--c2)',w:3}
+    ],
+    {p}
+  );
+
+  $('eres').innerHTML='Řešení: '+res;
+
+  $('ecalc').innerHTML=
+    det('Početní řešení',body)+
+    det('Jak získáme řešení z grafu',graphBody);
+
+  types([
+    $('eform'),
+    $('eres'),
+    $('ecalc')
+  ]);
+}
+
+// ------------------------------------------------------------------
+// 4) Nerovnice
+// ------------------------------------------------------------------
+function RN(){
+  const a=+$('na').value;
+  const b=+$('nb').value;
+  const c=+$('nc').value;
+  const d=+$('nd').value;
+  const o=$('nop').value;
+
+  const f=x=>a*x+b;
+  const g=x=>c*x+d;
+
+  const s=solve(a,b,o,c,d);
+  const S=sett(s);
+
+  $('nform').innerHTML=md(
+    `${tl(a,b)}${ot(o)}${tl(c,d)}`
+  );
+
+  let body='';
+  let graphBody='';
+
+  if(s.type==='bound'){
+    body=
+      st(`<strong>1.</strong> Začneme nerovnicí:
+        ${md(`${tl(a,b)}${ot(o)}${tl(c,d)}`)}`)+
+
+      st(`<strong>2.</strong> Členy s x převedeme na levou stranu a čísla na pravou:
+        ${md(`${tn(s.A)}x${ot(o)}${tn(s.B)}`)}`)+
+
+      (
+        s.A<0
+          ?st(`<strong>3.</strong> Dělíme záporným číslem ${mi(tn(s.A))}. Proto musíme <strong>obrátit znaménko nerovnosti</strong>.`)
+          :st(`<strong>3.</strong> Dělíme kladným číslem ${mi(tn(s.A))}. Znaménko nerovnosti se nemění.`)
+      )+
+
+      st(`${md(`x${ot(s.no)}${tn(s.v)}`)}`)+
+      an(`${md(`K=${S.t}`)}`);
+
+    const y=cl(f(s.v));
+    const relation=o[0]==='<'?'pod':'nad';
+    const includes=o.includes('=');
+
+    graphBody=
+      st(`<strong>1.</strong> Levou a pravou stranu zobrazíme jako dvě funkce:
+        ${md(`f(x)=${tl(a,b)}`)}
+        ${md(`g(x)=${tl(c,d)}`)}`)+
+
+      st(`<strong>2.</strong> Nejdřív najdeme jejich průsečík, tedy hranici mezi oblastmi:
+        ${md(`f(x)=g(x)`)}
+        Z početního řešení rovnosti dostaneme
+        ${md(`x=${tn(s.v)}`)}
+        a průsečík má souřadnice
+        ${md(`S=[${tn(s.v)};${tn(y)}]`)}`)+
+
+      st(`<strong>3.</strong> Původní nerovnice požaduje, aby byl graf f(x) <strong>${relation}</strong> grafem g(x). V grafu tedy sledujeme, na které straně od průsečíku je tato podmínka splněna.`)+
+
+      st(
+        includes
+          ?'Protože nerovnost obsahuje rovnost, samotný průsečík do řešení patří – na číselné ose je krajní bod plný.'
+          :'Protože nerovnost je ostrá, v průsečíku jsou obě funkce stejné, a proto krajní bod do řešení nepatří – na číselné ose je prázdný.'
+      )+
+
+      an(`Z grafu i z číselné osy odečteme
+        ${md(`K=${S.t}`)}`);
+
+  }else if(s.type==='all'){
+    body=
+      st('Po převedení členů vznikne nerovnost bez x, která je pravdivá pro každé reálné číslo.')+
+      an(`${md(`K=\\mathbb{R}`)}`);
+
+    graphBody=
+      st(`Porovnáváme
+        ${md(`f(x)=${tl(a,b)}`)}
+        ${md(`g(x)=${tl(c,d)}`)}`)+
+      st('Přímky mají takovou vzájemnou polohu, že požadovaná nerovnost platí pro každé x.')+
+      an(`${md(`K=\\mathbb{R}`)}`);
+
+  }else{
+    body=
+      st('Po převedení členů vznikne nerovnost bez x, která není pravdivá pro žádné reálné číslo.')+
+      an(`${md(`K=\\varnothing`)}`);
+
+    graphBody=
+      st(`Porovnáváme
+        ${md(`f(x)=${tl(a,b)}`)}
+        ${md(`g(x)=${tl(c,d)}`)}`)+
+      st('Grafy jsou v takové poloze, že požadovaný vztah mezi f(x) a g(x) nenastane pro žádné x.')+
+      an(`${md(`K=\\varnothing`)}`);
+  }
+
+  graph(
+    $('ngraph'),
+    [
+      {fn:f},
+      {fn:g,c:'var(--c2)',w:3}
+    ],
+    {
+      sh:S.a,
+      p:s.type==='bound'
+        ?[{x:s.v,y:f(s.v),lab:'S'}]
+        :[]
+    }
+  );
+
+  num(
+    $('nline'),
+    S.a.map(x=>({
+      ...x,
+      c:'var(--c1)'
+    }))
+  );
+
+  $('nres').innerHTML=
+    'Řešení: '+md(`K=${S.t}`);
+
+  $('ncalc').innerHTML=
+    det('Početní řešení',body)+
+    det('Jak získáme řešení z grafu',graphBody);
+
+  types([
+    $('nform'),
+    $('nres'),
+    $('ncalc')
+  ]);
+}
+
+// ------------------------------------------------------------------
+// 5) Soustava dvou rovnic
+// ------------------------------------------------------------------
+let sm='elim';
+
+function SD(){
+  return {
+    a1:+$('sa1').value,
+    b1:+$('sb1').value,
+    c1:+$('sc1').value,
+    a2:+$('sa2').value,
+    b2:+$('sb2').value,
+    c2:+$('sc2').value
+  };
+}
+
+function SS(d){
+  const D=cl(d.a1*d.b2-d.a2*d.b1);
+  const Dx=cl(d.c1*d.b2-d.c2*d.b1);
+  const Dy=cl(d.a1*d.c2-d.a2*d.c1);
+
+  if(Math.abs(D)>=E){
+    return {
+      type:'one',
+      x:cl(Dx/D),
+      y:cl(Dy/D)
+    };
+  }
+
+  const same=
+    Math.abs(d.a1*d.c2-d.a2*d.c1)<E &&
+    Math.abs(d.b1*d.c2-d.b2*d.c1)<E;
+
+  return {
+    type:same?'inf':'none'
+  };
+}
+
+function chooseElim(d){
+  const yPossible=Math.abs(d.b1)>E||Math.abs(d.b2)>E;
+  const xPossible=Math.abs(d.a1)>E||Math.abs(d.a2)>E;
+
+  if(yPossible && Math.abs(d.b1)+Math.abs(d.b2)<=Math.abs(d.a1)+Math.abs(d.a2)){
+    return {
+      variable:'y',
+      m1:d.b2,
+      m2:-d.b1
+    };
+  }
+
+  if(xPossible){
+    return {
+      variable:'x',
+      m1:d.a2,
+      m2:-d.a1
+    };
+  }
+
+  return {
+    variable:'y',
+    m1:d.b2,
+    m2:-d.b1
+  };
+}
+
+function renderSystemGraphExplanation(d,s){
+  let body=
+    st(`<strong>1.</strong> Každá rovnice se dvěma neznámými představuje v rovině přímku:
+      ${md(`${t2(d.a1,d.b1,d.c1)}`)}
+      ${md(`${t2(d.a2,d.b2,d.c2)}`)}`);
+
+  if(Math.abs(d.b1)>E){
+    body+=st(`První rovnici vyjádříme jako předpis pro y:
+      ${md(`y=${tl(-d.a1/d.b1,d.c1/d.b1)}`)}`);
+  }else if(Math.abs(d.a1)>E){
+    body+=st(`První rovnice určuje svislou přímku:
+      ${md(`x=${tn(d.c1/d.a1)}`)}`);
+  }
+
+  if(Math.abs(d.b2)>E){
+    body+=st(`Druhou rovnici vyjádříme jako předpis pro y:
+      ${md(`y=${tl(-d.a2/d.b2,d.c2/d.b2)}`)}`);
+  }else if(Math.abs(d.a2)>E){
+    body+=st(`Druhá rovnice určuje svislou přímku:
+      ${md(`x=${tn(d.c2/d.a2)}`)}`);
+  }
+
+  body+=st(`<strong>2.</strong> Řešení soustavy musí splňovat <strong>obě rovnice současně</strong>. V grafu tedy hledáme bod, který leží na obou přímkách – jejich průsečík.`);
+
+  if(s.type==='one'){
+    body+=st(`Přímky se protínají právě jednou:
+      ${md(`S=[${tn(s.x)};${tn(s.y)}]`)}`);
+    body+=an(`Proto
+      ${md(`K=\\{[${tn(s.x)};${tn(s.y)}]\\}`)}`);
+  }else if(s.type==='none'){
+    body+=st('Přímky jsou rovnoběžné a různé. Nemají společný bod.');
+    body+=an(`${md(`K=\\varnothing`)}`);
+  }else{
+    body+=st('Obě rovnice popisují tutéž přímku. Každý bod této přímky splňuje obě rovnice.');
+    body+=an('Soustava má nekonečně mnoho řešení.');
+  }
+
+  return body;
+}
+
+function renderSubstitution(d,s){
+  const choices=[];
+
+  [
+    {eq:1,var:'x',coef:d.a1,other:d.b1,c:d.c1},
+    {eq:1,var:'y',coef:d.b1,other:d.a1,c:d.c1},
+    {eq:2,var:'x',coef:d.a2,other:d.b2,c:d.c2},
+    {eq:2,var:'y',coef:d.b2,other:d.a2,c:d.c2}
+  ].forEach(q=>{
+    if(Math.abs(q.coef)>E){
+      const score=Math.abs(Math.abs(q.coef)-1)<E?0:Math.abs(q.coef);
+      choices.push({...q,score});
+    }
+  });
+
+  choices.sort((u,v)=>u.score-v.score);
+
+  const ch=choices[0];
+
+  let body=
+    st(`Začneme soustavou:
+      ${md(`\\begin{aligned}
+        ${t2(d.a1,d.b1,d.c1)}\\\\
+        ${t2(d.a2,d.b2,d.c2)}
+      \\end{aligned}`)}`);
+
+  if(!ch){
+    return body+an('Soustavu nelze tímto způsobem upravit.');
+  }
+
+  if(ch.var==='y'){
+    const m=cl(-ch.other/ch.coef);
+    const n=cl(ch.c/ch.coef);
+
+    body+=st(`<strong>1.</strong> Z ${ch.eq}. rovnice vyjádříme y:
+      ${md(`y=${tl(m,n)}`)}`);
+
+    const oa=ch.eq===1?d.a2:d.a1;
+    const ob=ch.eq===1?d.b2:d.b1;
+    const oc=ch.eq===1?d.c2:d.c1;
+
+    body+=st(`<strong>2.</strong> Tento výraz dosadíme místo y do druhé rovnice:
+      ${md(`${ts(oa,'x',true)}${ob<0?' - ':' + '}${tn(Math.abs(ob))}\\left(${tl(m,n)}\\right)=${tn(oc)}`)}`);
+
+    if(s.type==='one'){
+      body+=st(`<strong>3.</strong> Po úpravě dostaneme
+        ${md(`x=${tn(s.x)}`)}`);
+      body+=st(`<strong>4.</strong> Dosadíme zpět do vyjádřeného vztahu:
+        ${md(`y=${tn(s.y)}`)}`);
+      body+=an(`${md(`K=\\{[${tn(s.x)};${tn(s.y)}]\\}`)}`);
+    }else if(s.type==='none'){
+      body+=an('Po úpravě vznikne spor, takže soustava nemá řešení.');
+    }else{
+      body+=an('Po úpravě vznikne totožná rovnost, takže soustava má nekonečně mnoho řešení.');
+    }
+
+  }else{
+    // x = m y + n
+    const m=cl(-ch.other/ch.coef);
+    const n=cl(ch.c/ch.coef);
+
+    body+=st(`<strong>1.</strong> Z ${ch.eq}. rovnice vyjádříme x:
+      ${md(`x=${tvars(m,'y',n,'')}`)}`);
+
+    const oa=ch.eq===1?d.a2:d.a1;
+    const ob=ch.eq===1?d.b2:d.b1;
+    const oc=ch.eq===1?d.c2:d.c1;
+
+    body+=st(`<strong>2.</strong> Tento výraz dosadíme místo x do druhé rovnice:
+      ${md(`${tn(oa)}\\left(${tvars(m,'y',n,'')}\\right)${ts(ob,'y',false)}=${tn(oc)}`)}`);
+
+    if(s.type==='one'){
+      body+=st(`<strong>3.</strong> Po úpravě dostaneme
+        ${md(`y=${tn(s.y)}`)}`);
+      body+=st(`<strong>4.</strong> Dosadíme zpět:
+        ${md(`x=${tn(s.x)}`)}`);
+      body+=an(`${md(`K=\\{[${tn(s.x)};${tn(s.y)}]\\}`)}`);
+    }else if(s.type==='none'){
+      body+=an('Po úpravě vznikne spor, takže soustava nemá řešení.');
+    }else{
+      body+=an('Po úpravě vznikne totožná rovnost, takže soustava má nekonečně mnoho řešení.');
+    }
+  }
+
+  return body;
+}
+
+function renderElimination(d,s){
+  const e=chooseElim(d);
+
+  let body=
+    st(`Začneme soustavou:
+      ${md(`\\begin{aligned}
+        ${t2(d.a1,d.b1,d.c1)}\\\\
+        ${t2(d.a2,d.b2,d.c2)}
+      \\end{aligned}`)}`);
+
+  const A1=cl(e.m1*d.a1);
+  const B1=cl(e.m1*d.b1);
+  const C1=cl(e.m1*d.c1);
+
+  const A2=cl(e.m2*d.a2);
+  const B2=cl(e.m2*d.b2);
+  const C2=cl(e.m2*d.c2);
+
+  body+=st(`<strong>1.</strong> Chceme odstranit ${mi(e.variable)}. Rovnice vynásobíme tak, aby koeficienty u této neznámé byly opačné:
+    ${md(`${t2(d.a1,d.b1,d.c1)}\\quad \\cdot(${tn(e.m1)})`)}
+    ${md(`${t2(d.a2,d.b2,d.c2)}\\quad \\cdot(${tn(e.m2)})`)}`);
+
+  body+=st(`Po vynásobení:
+    ${md(`\\begin{aligned}
+      ${t2(A1,B1,C1)}\\\\
+      ${t2(A2,B2,C2)}
+    \\end{aligned}`)}`);
+
+  const Ax=cl(A1+A2);
+  const By=cl(B1+B2);
+  const C=cl(C1+C2);
+
+  body+=st(`<strong>2.</strong> Rovnice sečteme. Neznámá ${mi(e.variable)} zmizí:
+    ${md(`${t2(Ax,By,C)}`)}`);
+
+  if(s.type==='one'){
+    if(Math.abs(Ax)>E){
+      body+=st(`<strong>3.</strong> Vyjádříme x:
+        ${md(`x=${tn(s.x)}`)}`);
+      body+=st(`<strong>4.</strong> Dosadíme do jednodušší původní rovnice a dopočítáme y:
+        ${md(`y=${tn(s.y)}`)}`);
+    }else{
+      body+=st(`<strong>3.</strong> Vyjádříme y:
+        ${md(`y=${tn(s.y)}`)}`);
+      body+=st(`<strong>4.</strong> Dosadíme do jednodušší původní rovnice a dopočítáme x:
+        ${md(`x=${tn(s.x)}`)}`);
+    }
+
+    body+=an(`${md(`K=\\{[${tn(s.x)};${tn(s.y)}]\\}`)}`);
+
+  }else if(s.type==='none'){
+    body+=an('Po sečtení vznikne nepravdivá rovnost typu 0 = nenulové číslo. Soustava proto nemá řešení.');
+  }else{
+    body+=an('Po sečtení vznikne totožná rovnost 0 = 0. Rovnice popisují tutéž přímku a soustava má nekonečně mnoho řešení.');
+  }
+
+  return body;
+}
+
+function RS(){
+  const d=SD();
+  const s=SS(d);
+
+  $('sform').innerHTML=md(String.raw`\begin{cases}
+    ${tvars(d.a1,'x',d.b1,'y')}=${tn(d.c1)}\\
+    ${tvars(d.a2,'x',d.b2,'y')}=${tn(d.c2)}
+  \end{cases}`);
+
+  const funcs=[];
+  const verticals=[];
+
+  if(Math.abs(d.b1)>E){
+    funcs.push({
+      fn:x=>(d.c1-d.a1*x)/d.b1,
+      c:'var(--c1)'
+    });
+  }else if(Math.abs(d.a1)>E){
+    verticals.push({
+      x:d.c1/d.a1,
+      c:'var(--c1)'
+    });
+  }
+
+  if(Math.abs(d.b2)>E){
+    funcs.push({
+      fn:x=>(d.c2-d.a2*x)/d.b2,
+      c:'var(--c2)',
+      w:3
+    });
+  }else if(Math.abs(d.a2)>E){
+    verticals.push({
+      x:d.c2/d.a2,
+      c:'var(--c2)',
+      w:3
+    });
+  }
+
+  graph(
+    $('sgraph'),
+    funcs,
+    {
+      v:verticals,
+      p:s.type==='one'
+        ?[{x:s.x,y:s.y,lab:'S'}]
+        :[]
+    }
+  );
+
+  $('sres').innerHTML=
+    s.type==='one'
+      ?md(`K=\\{[${tn(s.x)};${tn(s.y)}]\\}`)
+      :s.type==='none'
+        ?md(`K=\\varnothing`)
+        :'Nekonečně mnoho řešení';
+
+  const easy=[
+    d.a1,d.b1,d.a2,d.b2
+  ].some(v=>Math.abs(Math.abs(v)-1)<E);
+
+  $('shint').textContent=
+    easy
+      ?'Doporučení: některá neznámá má koeficient ±1, proto může být dosazovací metoda velmi krátká.'
+      :'Doporučení: sčítací metoda obvykle vede k nejkratšímu výpočtu.';
+
+  let mainBody;
+
+  if(sm==='graph'){
+    mainBody=renderSystemGraphExplanation(d,s);
+  }else if(sm==='subst'){
+    mainBody=renderSubstitution(d,s);
+  }else{
+    mainBody=renderElimination(d,s);
+  }
+
+  $('scalc').innerHTML=
+    det(
+      sm==='elim'
+        ?'Sčítací metoda'
+        :sm==='subst'
+          ?'Dosazovací metoda'
+          :'Grafická metoda',
+      mainBody
+    )+
+    (
+      sm==='graph'
+        ?''
+        :det('Jak získáme řešení z grafu',renderSystemGraphExplanation(d,s))
+    );
+
+  types([
+    $('sform'),
+    $('sres'),
+    $('scalc')
+  ]);
+}
+
+// ------------------------------------------------------------------
+// 6) Soustava nerovnic ve dvou neznámých – graficky pomocí polorovin
+// ------------------------------------------------------------------
+function qData(){
+  return [
+    {a:+$('qa1').value,b:+$('qb1').value,o:$('qop1').value,c:+$('qr1').value},
+    {a:+$('qa2').value,b:+$('qb2').value,o:$('qop2').value,c:+$('qr2').value}
+  ];
+}
+
+function qLeftTex(q){
+  return tvars(q.a,'x',q.b,'y');
+}
+
+function qIneqTex(q){
+  return `${qLeftTex(q)}${ot(q.o)}${tn(q.c)}`;
+}
+
+function qBoundaryTex(q){
+  return `${qLeftTex(q)}=${tn(q.c)}`;
+}
+
+function qValue(q,x,y){
+  return cl(q.a*x+q.b*y);
+}
+
+function qInside(q,p){
+  const v=qValue(q,p.x,p.y)-q.c;
+  return q.o[0]==='<' ? v<=E : v>=-E;
+}
+
+function qStrict(q){
+  return q.o==='<' || q.o==='>';
+}
+
+function qClip(poly,q){
+  if(!poly.length) return [];
+
+  const out=[];
+
+  function intersect(P,Q){
+    const dx=Q.x-P.x;
+    const dy=Q.y-P.y;
+    const den=q.a*dx+q.b*dy;
+
+    if(Math.abs(den)<E) return Q;
+
+    const t=(q.c-q.a*P.x-q.b*P.y)/den;
+
+    return {
+      x:P.x+t*dx,
+      y:P.y+t*dy
+    };
+  }
+
+  for(let i=0;i<poly.length;i++){
+    const P=poly[i];
+    const Q=poly[(i+1)%poly.length];
+    const Pin=qInside(q,P);
+    const Qin=qInside(q,Q);
+
+    if(Pin&&Qin){
+      out.push(Q);
+    }else if(Pin&&!Qin){
+      out.push(intersect(P,Q));
+    }else if(!Pin&&Qin){
+      out.push(intersect(P,Q));
+      out.push(Q);
+    }
+  }
+
+  return out;
+}
+
+function qLineRectPoints(q,xMin,xMax,yMin,yMax){
+  const pts=[];
+
+  function add(x,y){
+    if(
+      x>=xMin-E&&x<=xMax+E&&
+      y>=yMin-E&&y<=yMax+E&&
+      Number.isFinite(x)&&Number.isFinite(y)&&
+      !pts.some(p=>Math.hypot(p.x-x,p.y-y)<1e-6)
+    ){
+      pts.push({x,y});
+    }
+  }
+
+  if(Math.abs(q.b)>E){
+    add(xMin,(q.c-q.a*xMin)/q.b);
+    add(xMax,(q.c-q.a*xMax)/q.b);
+  }
+
+  if(Math.abs(q.a)>E){
+    add((q.c-q.b*yMin)/q.a,yMin);
+    add((q.c-q.b*yMax)/q.a,yMax);
+  }
+
+  return pts.slice(0,2);
+}
+
+function qTestPoint(q){
+  const candidates=[
+    {x:0,y:0},
+    {x:1,y:0},
+    {x:0,y:1},
+    {x:-1,y:0},
+    {x:0,y:-1},
+    {x:2,y:1},
+    {x:-2,y:-1}
+  ];
+
+  return candidates.find(p=>Math.abs(qValue(q,p.x,p.y)-q.c)>.2) || {x:3,y:2};
+}
+
+function qBoundaryConstruction(q,label){
+  const pts=[];
+  const steps=[];
+
+  if(Math.abs(q.b)>E){
+    const y=cl(q.c/q.b);
+    pts.push({x:0,y});
+
+    steps.push(
+      `Položíme ${mi('x=0')}: `+
+      md(String.raw`${tn(q.b)}y=${tn(q.c)}\quad\Rightarrow\quad y=${tn(y)}`)+
+      ` Dostaneme bod ${mi(`${label}_1=[0;${tn(y)}]`)}.`
+    );
+  }
+
+  if(Math.abs(q.a)>E){
+    const x=cl(q.c/q.a);
+
+    if(!pts.some(p=>Math.hypot(p.x-x,p.y)<1e-6)){
+      pts.push({x,y:0});
+
+      steps.push(
+        `Položíme ${mi('y=0')}: `+
+        md(String.raw`${tn(q.a)}x=${tn(q.c)}\quad\Rightarrow\quad x=${tn(x)}`)+
+        ` Dostaneme bod ${mi(`${label}_2=[${tn(x)};0]`)}.`
+      );
+    }
+  }
+
+  if(pts.length<2){
+    if(Math.abs(q.b)>E){
+      const x=1;
+      const y=cl((q.c-q.a*x)/q.b);
+      pts.push({x,y});
+
+      steps.push(
+        `Pro druhý bod zvolíme ${mi('x=1')}: `+
+        md(String.raw`${tn(q.a)}\cdot1${ts(q.b,'y',false)}=${tn(q.c)}\quad\Rightarrow\quad y=${tn(y)}`)+
+        ` Dostaneme bod ${mi(`${label}_2=[1;${tn(y)}]`)}.`
+      );
+
+    }else if(Math.abs(q.a)>E){
+      const x=cl(q.c/q.a);
+
+      pts.length=0;
+      pts.push({x,y:-1},{x,y:1});
+      steps.length=0;
+
+      steps.push(
+        `Hraniční přímka je svislá: `+
+        md(String.raw`x=${tn(x)}`)+
+        ` Pro její vykreslení stačí například body `+
+        `${mi(`${label}_1=[${tn(x)};-1]`)} a ${mi(`${label}_2=[${tn(x)};1]`)}.`
+      );
+    }
+  }
+
+  return {pts,steps};
+}
+
+function qView(q1,q2){
+  const D=q1.a*q2.b-q2.a*q1.b;
+
+  if(Math.abs(D)>E){
+    const x=(q1.c*q2.b-q2.c*q1.b)/D;
+    const y=(q1.a*q2.c-q2.a*q1.c)/D;
+
+    if(Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x)<50&&Math.abs(y)<50){
+      return {xMin:x-7,xMax:x+7,yMin:y-7,yMax:y+7};
+    }
+  }
+
+  return {xMin:-8,xMax:8,yMin:-8,yMax:8};
+}
+
+function qPolyPath(poly,sx,sy){
+  if(!poly.length) return '';
+  return poly.map((p,i)=>`${i?'L':'M'} ${sx(p.x)} ${sy(p.y)}`).join(' ')+' Z';
+}
+
+function qGraph(svg,q1,q2){
+  const W=900,H=560,L=54,R=34,T=28,B=44;
+  const view=qView(q1,q2);
+  const {xMin,xMax,yMin,yMax}=view;
+
+  const sx=x=>L+(x-xMin)/(xMax-xMin)*(W-L-R);
+  const sy=y=>H-B-(y-yMin)/(yMax-yMin)*(H-T-B);
+
+  const rect=[
+    {x:xMin,y:yMin},
+    {x:xMax,y:yMin},
+    {x:xMax,y:yMax},
+    {x:xMin,y:yMax}
+  ];
+
+  const p1=qClip(rect,q1);
+  const p2=qClip(rect,q2);
+  const pi=qClip(p1,q2);
+
+  let out=[`<rect width="${W}" height="${H}" fill="white"/>`];
+
+  if(p1.length){
+    out.push(`<path d="${qPolyPath(p1,sx,sy)}" fill="var(--c1)" opacity=".12"/>`);
+  }
+
+  if(p2.length){
+    out.push(`<path d="${qPolyPath(p2,sx,sy)}" fill="var(--c2)" opacity=".12"/>`);
+  }
+
+  if(pi.length){
+    out.push(`<path d="${qPolyPath(pi,sx,sy)}" fill="var(--c3)" opacity=".28"/>`);
+  }
+
+  const xs=nice(xMax-xMin);
+  const ys=nice(yMax-yMin);
+  const ax=xMin<=0&&xMax>=0?sx(0):L;
+  const ay=yMin<=0&&yMax>=0?sy(0):H-B;
+
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax+E;x+=xs){
+    out.push(`<line x1="${sx(x)}" y1="${T}" x2="${sx(x)}" y2="${H-B}" stroke="var(--grid)"/>`);
+    out.push(`<text x="${sx(x)}" y="${yMin<=0&&yMax>=0?ay+18:H-B+18}" text-anchor="middle" font-size="12" fill="var(--axis)">${fmt(x)}</text>`);
+  }
+
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax+E;y+=ys){
+    out.push(`<line x1="${L}" y1="${sy(y)}" x2="${W-R}" y2="${sy(y)}" stroke="var(--grid)"/>`);
+    out.push(`<text x="${xMin<=0&&xMax>=0?ax-10:L-8}" y="${sy(y)+4}" text-anchor="end" font-size="12" fill="var(--axis)">${fmt(y)}</text>`);
+  }
+
+  if(xMin<=0&&xMax>=0){
+    out.push(`<line x1="${ax}" y1="${T}" x2="${ax}" y2="${H-B}" stroke="var(--axis)" stroke-width="1.8"/>`);
+  }
+
+  if(yMin<=0&&yMax>=0){
+    out.push(`<line x1="${L}" y1="${ay}" x2="${W-R}" y2="${ay}" stroke="var(--axis)" stroke-width="1.8"/>`);
+  }
+
+  [q1,q2].forEach((q,i)=>{
+    const pts=qLineRectPoints(q,xMin,xMax,yMin,yMax);
+    const color=i===0?'var(--c1)':'var(--c2)';
+
+    if(pts.length===2){
+      out.push(`<line x1="${sx(pts[0].x)}" y1="${sy(pts[0].y)}" x2="${sx(pts[1].x)}" y2="${sy(pts[1].y)}" stroke="${color}" stroke-width="4" ${qStrict(q)?'stroke-dasharray="10 8"':''}/>`);
+    }
+
+    const t=qTestPoint(q);
+    if(t.x>=xMin&&t.x<=xMax&&t.y>=yMin&&t.y<=yMax){
+      out.push(`<circle cx="${sx(t.x)}" cy="${sy(t.y)}" r="5" fill="white" stroke="${color}" stroke-width="2"/>`);
+      out.push(`<text x="${sx(t.x)+8}" y="${sy(t.y)-8}" font-size="12" font-weight="800" fill="${color}">T${i+1}</text>`);
+    }
+  });
+
+  out.push(`<rect x="${L}" y="${T}" width="${W-L-R}" height="${H-T-B}" fill="none" stroke="var(--line)"/>`);
+
+  svg.innerHTML=out.join('');
+
+  return {intersectionVisible:pi.length>0};
+}
+
+function qOneExplanation(q,n){
+  const colorName=n===1?'modrou':'růžovou';
+  const label=n===1?'A':'B';
+  const bc=qBoundaryConstruction(q,label);
+  const t=qTestPoint(q);
+  const val=qValue(q,t.x,t.y);
+
+  const trueAtTest=
+    q.o==='<' ? val<q.c :
+    q.o==='<=' ? val<=q.c :
+    q.o==='>' ? val>q.c :
+    val>=q.c;
+
+  let body=
+    st(`<strong>1.</strong> Začneme nerovnicí:
+      ${md(qIneqTex(q))}`)+
+
+    st(`<strong>2.</strong> Nejprve nakreslíme <strong>hraniční přímku</strong>.
+      Znaménko nerovnosti dočasně nahradíme rovnítkem:
+      ${md(qBoundaryTex(q))}`);
+
+  bc.steps.forEach((text,i)=>{
+    body+=st(`<strong>${i+3}.</strong> ${text}`);
+  });
+
+  const stepNo=3+bc.steps.length;
+
+  let substitution='';
+
+  if(Math.abs(q.a)>=E){
+    substitution+=String.raw`${tn(q.a)}\cdot(${tn(t.x)})`;
+  }
+
+  if(Math.abs(q.b)>=E){
+    const term=String.raw`${tn(Math.abs(q.b))}\cdot(${tn(t.y)})`;
+
+    if(!substitution){
+      substitution=q.b<0?`-${term}`:term;
+    }else{
+      substitution+=q.b<0?`-${term}`:`+${term}`;
+    }
+  }
+
+  if(!substitution) substitution='0';
+
+  body+=st(`<strong>${stepNo}.</strong> Teď určíme, kterou polorovinu vybarvit.
+    Zvolíme testovací bod
+    ${md(String.raw`T_${n}=[${tn(t.x)};${tn(t.y)}]`)}
+    a dosadíme ho do původní nerovnice:
+    ${md(String.raw`${substitution}=${tn(val)}`)}
+    Dostaneme porovnání
+    ${md(String.raw`${tn(val)}${ot(q.o)}${tn(q.c)}`)}
+    Tvrzení je <strong>${trueAtTest?'pravdivé':'nepravdivé'}</strong>.`);
+
+  body+=st(
+    trueAtTest
+      ?`Proto vybarvíme ${colorName} polorovinu, ve které leží testovací bod T${n}.`
+      :`Testovací bod řešením není, proto vybarvíme ${colorName} polorovinu na opačné straně hraniční přímky.`
+  );
+
+  body+=st(
+    qStrict(q)
+      ?`Nerovnost je ostrá (${mi(ot(q.o))}), takže body hraniční přímky do řešení <strong>nepatří</strong>. Přímka je proto čárkovaná.`
+      :`Nerovnost obsahuje rovnost (${mi(ot(q.o))}), takže hraniční přímka do řešení <strong>patří</strong>. Přímka je proto plná.`
+  );
+
+  return body;
+}
+
+function RQ(){
+  const [q1,q2]=qData();
+
+  $('qform').innerHTML=md(String.raw`\begin{cases}
+    ${qIneqTex(q1)}\\
+    ${qIneqTex(q2)}
+  \end{cases}`);
+
+  if(
+    (Math.abs(q1.a)<E&&Math.abs(q1.b)<E) ||
+    (Math.abs(q2.a)<E&&Math.abs(q2.b)<E)
+  ){
+    $('qgraph').innerHTML='';
+    $('qres').textContent='Alespoň jeden koeficient u x nebo y musí být nenulový.';
+    $('qcalc').innerHTML='';
+
+    types([
+      $('qform')
+    ]);
+
+    return;
+  }
+
+  qGraph($('qgraph'),q1,q2);
+
+  const resultTex=String.raw`
+    K=\left\{
+      [x;y]\in\mathbb{R}^2
+      \;\middle|\;
+      ${qIneqTex(q1)},\;
+      ${qIneqTex(q2)}
+    \right\}
+  `;
+
+  $('qres').innerHTML=
+    `Řešením je <strong>zeleně vyznačený průnik obou polorovin</strong>:`+
+    md(resultTex);
+
+  const intersectionExplanation=
+    st(`<strong>1.</strong> První nerovnice určuje modrou polorovinu,
+      druhá nerovnice růžovou polorovinu.`)+
+
+    st(`<strong>2.</strong> Bod je řešením soustavy jen tehdy,
+      když splňuje <strong>obě nerovnice současně</strong>.
+      Musí tedy ležet v obou vybarvených polorovinách.`)+
+
+    st(`<strong>3.</strong> Společná část obou polorovin je v grafu
+      zvýrazněna zeleně. Právě tato oblast je řešením celé soustavy.`)+
+
+    an(`Řešení zapisujeme jako množinu bodů
+      ${md(resultTex)}`);
+
+  $('qcalc').innerHTML=
+    det('1. nerovnice – hraniční přímka a polorovina',qOneExplanation(q1,1))+
+    det('2. nerovnice – hraniční přímka a polorovina',qOneExplanation(q2,2))+
+    det('Průnik obou polorovin',intersectionExplanation);
+
+  types([
+    $('qform'),
+    $('qres'),
+    $('qcalc')
+  ]);
+}
+
+// ------------------------------------------------------------------
+// Generátory
+// ------------------------------------------------------------------
+const rr=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const ch=a=>a[Math.floor(Math.random()*a.length)];
+
+function GG(){
+  const a=ch([-3,-2,-1,-.5,.5,1,2,3]);
+  const b=rr(-5,5);
+
+  $('ga').value=a;
+  $('gb').value=b;
+
+  RG();
+}
+
+function GI(){
+  $('ia').value=ch([-3,-2,-1.5,-1,-.5,.5,1,1.5,2,3]);
+  $('ib').value=rr(-5,5);
+  $('ix1').value=rr(-4,-1);
+  $('ix2').value=rr(1,4);
+
+  RI();
+}
+
+function GE(){
+  const x=rr(-5,5);
+  const a=ch([-4,-3,-2,-1,1,2,3,4]);
+  let c=ch([-3,-2,-1,0,1,2,3]);
+
+  if(c===a) c+=1;
+
+  const b=rr(-5,5);
+  const d=(a-c)*x+b;
+
+  $('ea').value=a;
+  $('ec').value=c;
+  $('eb').value=b;
+  $('ed').value=d;
+
+  RE();
+}
+
+function GN(){
+  $('na').value=ch([-4,-3,-2,-1,1,2,3,4]);
+  $('nb').value=rr(-5,5);
+  $('nc').value=ch([-3,-2,-1,0,1,2,3]);
+  $('nd').value=rr(-5,5);
+  $('nop').value=ch(['<','<=','>','>=']);
+
+  RN();
+}
+
+function GS(){
+  const x=rr(-4,4);
+  const y=rr(-4,4);
+
+  let a1,b1,a2,b2;
+
+  do{
+    a1=ch([-3,-2,-1,1,2,3]);
+    b1=ch([-3,-2,-1,1,2,3]);
+    a2=ch([-3,-2,-1,1,2,3]);
+    b2=ch([-3,-2,-1,1,2,3]);
+  }while(a1*b2-a2*b1===0);
+
+  $('sa1').value=a1;
+  $('sb1').value=b1;
+  $('sc1').value=a1*x+b1*y;
+
+  $('sa2').value=a2;
+  $('sb2').value=b2;
+  $('sc2').value=a2*x+b2*y;
+
+  RS();
+}
+
+function GQ(){
+  function row(){
+    let a,b;
+
+    do{
+      a=ch([-3,-2,-1,0,1,2,3]);
+      b=ch([-3,-2,-1,0,1,2,3]);
+    }while(a===0&&b===0);
+
+    return {
+      a,b,
+      c:rr(-5,5),
+      o:ch(['<','<=','>','>='])
+    };
+  }
+
+  let q1=row();
+  let q2=row();
+
+  // Nechceme příliš často rovnoběžné hraniční přímky.
+  let guard=0;
+  while(Math.abs(q1.a*q2.b-q2.a*q1.b)<E&&guard<30){
+    q2=row();
+    guard++;
+  }
+
+  $('qa1').value=q1.a;
+  $('qb1').value=q1.b;
+  $('qr1').value=q1.c;
+  $('qop1').value=q1.o;
+
+  $('qa2').value=q2.a;
+  $('qb2').value=q2.b;
+  $('qr2').value=q2.c;
+  $('qop2').value=q2.o;
+
+  RQ();
+}
+
+// ------------------------------------------------------------------
+// Události
+// ------------------------------------------------------------------
+document.querySelectorAll('.tab').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>{
+      x.classList.toggle('active',x===b);
+    });
+
+    document.querySelectorAll('.view').forEach(v=>{
+      v.classList.toggle('active',v.id==='view-'+b.dataset.v);
+    });
+  };
+});
+
+document.querySelectorAll('[data-gm]').forEach(b=>{
+  b.onclick=()=>{
+    gm=b.dataset.gm;
+
+    document.querySelectorAll('[data-gm]').forEach(x=>{
+      x.classList.toggle('active',x===b);
+    });
+
+    RG();
+  };
+});
+
+document.querySelectorAll('[data-im]').forEach(b=>{
+  b.onclick=()=>{
+    im=b.dataset.im;
+
+    document.querySelectorAll('[data-im]').forEach(x=>{
+      x.classList.toggle('active',x===b);
+    });
+
+    RI();
+  };
+});
+
+document.querySelectorAll('[data-sm]').forEach(b=>{
+  b.onclick=()=>{
+    sm=b.dataset.sm;
+
+    document.querySelectorAll('[data-sm]').forEach(x=>{
+      x.classList.toggle('active',x===b);
+    });
+
+    RS();
+  };
+});
+
+[
+  ['ga','gb'],
+  ['ia','ib','ix1','ix2'],
+  ['ea','eb','ec','ed'],
+  ['na','nb','nc','nd','nop'],
+  ['sa1','sb1','sc1','sa2','sb2','sc2'],
+  ['qa1','qb1','qop1','qr1','qa2','qb2','qop2','qr2']
+].forEach((group,i)=>{
+  const render=[RG,RI,RE,RN,RS,RQ][i];
+
+  group.forEach(id=>{
+    $(id).addEventListener('input',render);
+    $(id).addEventListener('change',render);
+  });
+});
+
+$('ggen').onclick=GG;
+$('igen').onclick=GI;
+$('egen').onclick=GE;
+$('ngen').onclick=GN;
+$('sgen').onclick=GS;
+$('qgen').onclick=GQ;
+
+$('random').onclick=()=>{
+  const v=document.querySelector('.tab.active').dataset.v;
+
+  ({
+    graph:GG,
+    inverse:GI,
+    equation:GE,
+    ineq:GN,
+    system:GS,
+    ineqsys:GQ
+  }[v])();
+};
+
+$('reset').onclick=()=>location.reload();
+
+RG();
+RI();
+RE();
+RN();
+RS();
+RQ();
+
+})();
+
+</script>
+</body>
+</html>

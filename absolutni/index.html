@@ -1,1 +1,748 @@
-<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Funkce s absolutní hodnotou</title></head><body><p style="font-family:system-ui;padding:20px">Načítám funkci s absolutní hodnotou…</p><script>(async()=>{try{const r=await fetch('../_source/absolutni.html.gz.b64');if(!r.ok)throw new Error('source');const b64=(await r.text()).trim();const bytes=Uint8Array.from(atob(b64),c=>c.charCodeAt(0));const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));const html=await new Response(stream).text();document.open();document.write(html);document.close()}catch(e){document.body.innerHTML='<p style="font-family:system-ui;padding:20px;color:#b42318">Aplikaci se nepodařilo načíst.</p>';console.error(e)}})();</script></body></html>
+<!DOCTYPE html><html lang="cs"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Funkce s absolutní hodnotou</title>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},chtml:{scale:1},options:{skipHtmlTags:['script','noscript','style','textarea','pre','code']}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><style>:root{--bg:#f4f6f8;--panel:#fff;--text:#172033;--muted:#667085;--line:#d9dee8;--accent:#5b5bd6;--accent-soft:#ececff;--good:#087a55;--good-soft:#ecfdf3;--warn:#a15c00;--warn-soft:#fff7ed;--danger:#b42318;--danger-soft:#fef3f2;--grid:#e8ebf0;--axis:#697386;--curve:#5b5bd6;--curve2:#c11574;--curve3:#087a55;--shadow:0 10px 28px rgba(16,24,40,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,select{font:inherit}button{cursor:pointer}.app{max-width:1450px;margin:0 auto;padding:22px}.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px}.hero h1{margin:0;font-size:clamp(28px,4vw,42px);letter-spacing:-.03em}.hero p{margin:7px 0 0;color:var(--muted);max-width:850px;line-height:1.5}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{min-height:42px;padding:9px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--text);font-weight:800}.btn:hover{background:#fafbfc}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.top-tabs{display:flex;gap:6px;padding:6px;background:#e9edf2;border-radius:14px;margin-bottom:18px;overflow-x:auto}.top-tab{border:0;background:transparent;padding:10px 15px;border-radius:10px;font-weight:850;color:var(--muted);white-space:nowrap}.top-tab.active{background:#fff;color:var(--accent);box-shadow:0 1px 4px rgba(16,24,40,.08)}.view{display:none}.view.active{display:block}.layout{display:grid;grid-template-columns:minmax(320px,420px) minmax(0,1fr);gap:18px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.controls{padding:18px;position:sticky;top:12px}.content{display:grid;gap:18px;min-width:0}.section-title{margin:0 0 12px;font-size:18px}.eq-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfcfe;margin-bottom:12px;text-align:center}.eq-card.primary{background:var(--accent-soft);border-color:#d8d8ff}.eq-label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900}.eq-display{font-size:20px;min-height:38px;margin-top:5px}.abs-term{border:1px solid var(--line);border-radius:13px;padding:12px;margin-bottom:9px}.abs-term-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;font-weight:900}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.field label{display:block;font-size:11px;color:var(--muted);font-weight:850;margin-bottom:4px}.field input,.field select,select{width:100%;min-height:40px;border:1px solid var(--line);border-radius:10px;padding:7px 9px;background:#fff}.field input:focus,.field select:focus,select:focus{outline:3px solid var(--accent-soft);border-color:var(--accent)}.checkline{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin:8px 0}.method-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.method-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-weight:800;font-size:13px}.method-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.hint{margin-top:10px;padding:10px 11px;border-radius:11px;background:#f8fafc;color:var(--muted);font-size:13px;line-height:1.45}.generator{border-top:1px solid var(--line);margin-top:15px;padding-top:15px}.graph-panel,.result-panel,.calc-panel,.props-panel{padding:18px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.section-head h2{margin:0;font-size:20px}.badge{font-size:11px;padding:5px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:900}.graph-wrap{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff}svg.graph{display:block;width:100%;height:auto;aspect-ratio:16/10;min-height:410px}.legend{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:9px}.legend span{display:inline-flex;align-items:center;gap:5px}.legend i{width:10px;height:10px;border-radius:50%;display:inline-block}.result-box{background:var(--good-soft);color:var(--good);border-radius:13px;padding:13px;text-align:center;font-weight:850}.calc details{border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:9px;background:#fff}.calc summary{list-style:none;padding:13px 14px;font-weight:900;cursor:pointer;display:flex;justify-content:space-between}.calc summary::-webkit-details-marker{display:none}.calc summary::after{content:"+";color:var(--accent);font-size:19px}.calc details[open] summary::after{content:"−"}.calc-body{border-top:1px solid var(--line);padding:13px}.step{background:#f8fafc;border-radius:11px;padding:11px;margin-bottom:8px;line-height:1.5}.answer{background:var(--accent-soft);border-radius:11px;padding:12px;font-weight:800}mjx-container[display="true"]{margin:.5em 0!important;overflow-x:auto;overflow-y:hidden;max-width:100%}.props-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}.prop{border:1px solid var(--line);border-radius:12px;padding:11px}.prop .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:900}.prop .v{margin-top:4px;font-weight:850}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;min-width:500px}th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:center}th{background:#f8fafc}.mini-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}.mini-card{border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px}.mini-head{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:900;margin-bottom:6px}.mini-wrap{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}.mini-svg{display:block;width:100%;height:auto;aspect-ratio:16/6;min-height:180px}.graph-point{cursor:pointer}.coord-popover text{font-size:14px;font-weight:900;fill:var(--text)}.coord-popover rect{fill:white;stroke:var(--line);stroke-width:1.5}.coord-popover{pointer-events:none}.point-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.small-note{color:var(--muted);font-size:12px;line-height:1.4;margin-top:8px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.controls{position:static}}@media(max-width:700px){.app{padding:11px}.hero{flex-direction:column;align-items:flex-start}.grid4,.grid3,.grid2,.props-grid{grid-template-columns:1fr 1fr}svg.graph{min-height:340px}.top-tabs{width:100%}}@media(max-width:430px){.grid4,.grid3,.grid2,.props-grid{grid-template-columns:1fr}}
+</style></head><body>
+<div class="app" id="absApp"><header class="hero"><div><h1>Funkce s absolutní hodnotou</h1><p>Grafy, transformace, určování předpisu, rovnice a nerovnice. Postupy jsou vedené školní cestou a matematika se zobrazuje pomocí MathJaxu.</p></div><div class="actions"><button class="btn" id="resetAll">Výchozí příklad</button><button class="btn primary" id="randomTop">🎲 Vygenerovat</button></div></header>
+<nav class="top-tabs"><button class="top-tab active" data-view="graph">Graf z předpisu</button><button class="top-tab" data-view="transform">Transformace</button><button class="top-tab" data-view="inverse">Předpis z grafu</button><button class="top-tab" data-view="equation">Rovnice</button><button class="top-tab" data-view="inequality">Nerovnice</button></nav>
+<section class="view active" id="view-graph"><div class="layout"><aside class="panel controls"><h2 class="section-title">Předpis funkce</h2><div class="abs-term"><div class="abs-term-head">1. absolutní hodnota</div><div class="grid3"><div class="field"><label>a₁ před | |</label><input id="g_a1" type="number" step="0.5" value="2"></div><div class="field"><label>b₁ u x uvnitř</label><input id="g_b1" type="number" step="0.5" value="1"></div><div class="field"><label>c₁ uvnitř</label><input id="g_c1" type="number" step="0.5" value="-3"></div></div></div>
+<label class="checkline"><input id="g_use2" type="checkbox"> Přidat druhou absolutní hodnotu</label><div class="abs-term" id="g_term2" style="display:none"><div class="abs-term-head">2. absolutní hodnota</div><div class="grid3"><div class="field"><label>a₂</label><input id="g_a2" type="number" step="0.5" value="1"></div><div class="field"><label>b₂</label><input id="g_b2" type="number" step="0.5" value="1"></div><div class="field"><label>c₂</label><input id="g_c2" type="number" step="0.5" value="1"></div></div></div>
+<div class="abs-term"><div class="abs-term-head">Mimo absolutní hodnotu</div><div class="grid2"><div class="field"><label>m u x</label><input id="g_m" type="number" step="0.5" value="0"></div><div class="field"><label>n</label><input id="g_n" type="number" step="0.5" value="-1"></div></div></div><div class="eq-card primary"><div class="eq-label">Aktuální předpis</div><div class="eq-display" id="g_formula"></div></div>
+<div class="method-tabs"><button class="method-btn active" data-method="transform">Transformace</button><button class="method-btn" data-method="intervals">Intervaly</button><button class="method-btn" data-method="table">Tabulka</button></div><div class="hint" id="g_recommend"></div>
+<div class="generator"><h3 style="margin:0 0 9px;font-size:16px">Generátor</h3><div class="grid2"><div class="field"><label>Počet | |</label><select id="g_genCount"><option value="1">1 absolutní hodnota</option><option value="2">2 absolutní hodnoty</option></select></div><div class="field"><label>Obtížnost</label><select id="g_diff"><option value="easy">Lehká</option><option value="medium">Střední</option></select></div></div><button class="btn primary" id="g_generate" style="width:100%;margin-top:9px">Vygenerovat funkci</button></div></aside>
+<main class="content"><section class="panel graph-panel"><div class="section-head"><h2>Graf</h2><span class="badge" id="g_methodBadge">Transformace</span></div><div class="graph-wrap"><svg class="graph" id="g_graph" viewBox="0 0 900 560"></svg></div><div class="legend" id="g_legend"></div></section><section class="panel calc-panel"><div class="section-head"><h2>Postup konstrukce</h2><span class="badge">Rozbal postup</span></div><div class="calc" id="g_calc"></div></section><section class="panel props-panel"><h2 style="margin:0 0 12px">Základní vlastnosti</h2><div class="props-grid" id="g_props"></div></section></main></div></section>
+<section class="view" id="view-transform"><div class="layout"><aside class="panel controls"><h2 class="section-title">Základní funkce</h2><div class="field"><label>Typ funkce f(x)</label><select id="t_type"><option value="line">Lineární f(x)=ax+b</option><option value="quad">Kvadratická f(x)=ax²+bx+c</option></select></div><div class="grid3" style="margin-top:9px"><div class="field"><label>a</label><input id="t_a" type="number" step="0.5" value="1"></div><div class="field"><label>b</label><input id="t_b" type="number" step="0.5" value="-2"></div><div class="field" id="t_cWrap" style="display:none"><label>c</label><input id="t_c" type="number" step="0.5" value="-3"></div></div><div class="field" style="margin-top:12px"><label>Transformace</label><select id="t_mode"><option value="absY">y = |f(x)|</option><option value="absX">y = f(|x|)</option><option value="both">y = |f(|x|)|</option></select></div><div class="eq-card primary" style="margin-top:12px"><div class="eq-label">Výsledná funkce</div><div class="eq-display" id="t_formula"></div></div><div class="hint" id="t_hint"></div><button class="btn primary" id="t_generate" style="width:100%;margin-top:12px">🎲 Nový příklad</button></aside><main class="content"><section class="panel graph-panel"><div class="section-head"><h2>Porovnání grafů</h2></div><div class="graph-wrap"><svg class="graph" id="t_graph" viewBox="0 0 900 560"></svg></div><div class="legend"><span><i style="background:var(--curve2)"></i>původní f(x)</span><span><i style="background:var(--curve)"></i>po transformaci</span></div></section><section class="panel calc-panel"><div class="section-head"><h2>Co se s grafem stane</h2></div><div class="calc" id="t_calc"></div></section></main></div></section>
+<section class="view" id="view-inverse"><div class="layout"><aside class="panel controls"><h2 class="section-title">Úloha</h2><div class="hint">Z grafu funkce tvaru \(y=a|x-p|+q\) urči předpis. V grafu je vyznačen vrchol a jeden další bod.</div><div class="point-controls" style="margin-top:12px"><div class="field"><label>Vrchol p</label><input id="i_p" type="number" step="1" value="2"></div><div class="field"><label>Vrchol q</label><input id="i_q" type="number" step="1" value="-1"></div><div class="field"><label>Koeficient a</label><input id="i_a" type="number" step="0.5" value="2"></div><div class="field"><label>Vzdálenost bodu Δx</label><input id="i_dx" type="number" step="1" min="1" value="2"></div></div><button class="btn primary" id="i_generate" style="width:100%;margin-top:12px">🎲 Vygenerovat zadání</button><div class="eq-card" style="margin-top:12px"><div class="eq-label">Zadané údaje</div><div class="eq-display" id="i_data"></div></div></aside><main class="content"><section class="panel graph-panel"><div class="section-head"><h2>Graf</h2></div><div class="graph-wrap"><svg class="graph" id="i_graph" viewBox="0 0 900 560"></svg></div></section><section class="panel calc-panel"><div class="section-head"><h2>Určení předpisu</h2><span class="badge">Rozbal postup</span></div><div class="calc" id="i_calc"></div></section></main></div></section>
+<section class="view" id="view-equation"><div class="layout"><aside class="panel controls"><h2 class="section-title">Rovnice s absolutní hodnotou</h2><div class="eq-label">Levá strana: a|bx+c|+d</div><div class="grid4" style="margin-top:6px"><div class="field"><label>a</label><input id="e_a" type="number" step="0.5" value="1"></div><div class="field"><label>b</label><input id="e_b" type="number" step="0.5" value="1"></div><div class="field"><label>c</label><input id="e_c" type="number" step="0.5" value="-2"></div><div class="field"><label>d</label><input id="e_d" type="number" step="0.5" value="0"></div></div><div class="eq-label" style="margin-top:12px">Pravá strana: mx+n</div><div class="grid2" style="margin-top:6px"><div class="field"><label>m</label><input id="e_m" type="number" step="0.5" value="0"></div><div class="field"><label>n</label><input id="e_n" type="number" step="0.5" value="3"></div></div><div class="eq-card primary" style="margin-top:12px"><div class="eq-label">Rovnice</div><div class="eq-display" id="e_formula"></div></div><button class="btn primary" id="e_generate" style="width:100%">🎲 Nová rovnice</button></aside><main class="content"><section class="panel graph-panel"><div class="section-head"><h2>Grafické řešení</h2></div><div class="graph-wrap"><svg class="graph" id="e_graph" viewBox="0 0 900 560"></svg></div><div class="legend"><span><i style="background:var(--curve)"></i>levá strana</span><span><i style="background:var(--curve2)"></i>pravá strana</span></div></section><section class="panel result-panel"><div class="result-box" id="e_result"></div></section><section class="panel calc-panel"><div class="section-head"><h2>Řešení krok po kroku</h2></div><div class="calc" id="e_calc"></div></section></main></div></section>
+<section class="view" id="view-inequality"><div class="layout"><aside class="panel controls"><h2 class="section-title">Nerovnice s absolutní hodnotou</h2><div class="eq-label">Levá strana: a|bx+c|+d</div><div class="grid4" style="margin-top:6px"><div class="field"><label>a</label><input id="n_a" type="number" step="0.5" value="1"></div><div class="field"><label>b</label><input id="n_b" type="number" step="0.5" value="1"></div><div class="field"><label>c</label><input id="n_c" type="number" step="0.5" value="-2"></div><div class="field"><label>d</label><input id="n_d" type="number" step="0.5" value="0"></div></div><div class="field" style="margin-top:10px"><label>Znaménko</label><select id="n_op"><option value="<">&lt;</option><option value="<=">≤</option><option value=">">&gt;</option><option value=">=">≥</option></select></div><div class="eq-label" style="margin-top:12px">Pravá strana: mx+n</div><div class="grid2" style="margin-top:6px"><div class="field"><label>m</label><input id="n_m" type="number" step="0.5" value="0"></div><div class="field"><label>n</label><input id="n_n" type="number" step="0.5" value="3"></div></div><div class="eq-card primary" style="margin-top:12px"><div class="eq-label">Nerovnice</div><div class="eq-display" id="n_formula"></div></div><button class="btn primary" id="n_generate" style="width:100%">🎲 Nová nerovnice</button></aside><main class="content"><section class="panel graph-panel"><div class="section-head"><h2>Grafické řešení</h2><span class="badge">vybarvené x = řešení</span></div><div class="graph-wrap"><svg class="graph" id="n_graph" viewBox="0 0 900 590"></svg></div><div class="legend"><span><i style="background:var(--curve)"></i>levá strana</span><span><i style="background:var(--curve2)"></i>pravá strana</span></div></section><section class="panel result-panel"><div class="result-box" id="n_result"></div></section><section class="panel calc-panel"><div class="section-head"><h2>Řešení krok po kroku</h2></div><div class="calc" id="n_calc"></div></section></main></div></section>
+</div><script>(() => {
+const EPS=1e-9,$=id=>document.getElementById(id),clean=n=>Math.abs(n)<EPS?0:Math.round(n*1e6)/1e6;
+const fmt=n=>(Number.isInteger(clean(n))?String(clean(n)):String(Math.round(clean(n)*1000)/1000)).replace('-','−').replace('.',',');
+const texNum=n=>(Number.isInteger(clean(n))?String(clean(n)):String(Math.round(clean(n)*1000)/1000)).replace('.','{,}');
+const md=t=>`\\[${t}\\]`,mi=t=>`\\(${t}\\)`,opTex=op=>op==='>='?'\\ge':op==='<='?'\\le':op;
+let mj=Promise.resolve();
+function typeset(targets){if(!window.MathJax||!MathJax.typesetPromise)return;targets=targets.filter(Boolean);mj=mj.then(()=>{if(MathJax.typesetClear)MathJax.typesetClear(targets);return MathJax.typesetPromise(targets)}).catch(()=>{})}
+function texSigned(n,body,first=false){n=clean(n);if(Math.abs(n)<EPS)return'';const neg=n<0,abs=Math.abs(n),coef=(body&&Math.abs(abs-1)<EPS)?'':texNum(abs),term=coef+body;return first?(neg?'-':'')+term:(neg?' - ':' + ')+term}
+function texLinear(m,n){let out='';if(Math.abs(m)>=EPS)out=texSigned(m,'x',true);if(Math.abs(n)>=EPS||!out)out+=texSigned(n,'',!out);return out||'0'}
+function texAbsTerm(a,b,c,first=false){a=clean(a);if(Math.abs(a)<EPS)return'';let inner='';if(Math.abs(b)>=EPS)inner=texSigned(b,'x',true);if(Math.abs(c)>=EPS||!inner)inner+=texSigned(c,'',!inner);const neg=a<0,abs=Math.abs(a),coef=Math.abs(abs-1)<EPS?'':texNum(abs),body=`${coef}\\left|${inner}\\right|`;return first?(neg?'-':'')+body:(neg?' - ':' + ')+body}
+const step=h=>`<div class="step">${h}</div>`,answer=h=>`<div class="answer">${h}</div>`,details=(t,b)=>`<details><summary>${t}</summary><div class="calc-body">${b}</div></details>`;
+function niceStep(span){const raw=span/10,pow=Math.pow(10,Math.floor(Math.log10(raw))),m=raw/pow;return(m<1.5?1:m<3.5?2:m<7.5?5:10)*pow}
+function graphSVG(svg,funcs,opts={}){
+  const W=900,H=opts.height||560,pL=52,pR=34,pT=28,pB=42;
+  const xMin=opts.xMin??-8,xMax=opts.xMax??8;
+  const sample=[];
+  funcs.forEach(f=>{
+    for(let i=0;i<=300;i++){
+      const x=xMin+(xMax-xMin)*i/300, y=f.fn(x);
+      if(Number.isFinite(y)) sample.push(y);
+    }
+  });
+  sample.push(0);
+  let yMin=opts.yMin??Math.min(...sample), yMax=opts.yMax??Math.max(...sample);
+  if(!Number.isFinite(yMin)||!Number.isFinite(yMax)){ yMin=-6; yMax=6; }
+  if(yMax-yMin<8){ const mid=(yMax+yMin)/2; yMin=mid-4; yMax=mid+4; }
+  else { const sp=yMax-yMin; yMin-=sp*.08; yMax+=sp*.08; }
+  const sx=x=>pL+(x-xMin)/(xMax-xMin)*(W-pL-pR);
+  const sy=y=>H-pB-(y-yMin)/(yMax-yMin)*(H-pT-pB);
+  const axisXVisible=(xMin<=0&&xMax>=0), axisYVisible=(yMin<=0&&yMax>=0);
+  const axisXPx=axisXVisible?sx(0):pL, axisYPx=axisYVisible?sy(0):(H-pB);
+
+  let out=[`<rect width="${W}" height="${H}" fill="white"/>`];
+
+  (opts.shades||[]).forEach(sh=>{
+    const from=sh.from===-Infinity?xMin:Math.max(xMin,sh.from);
+    const to=sh.to===Infinity?xMax:Math.min(xMax,sh.to);
+    if(to>from) out.push(`<rect x="${sx(from)}" y="${pT}" width="${sx(to)-sx(from)}" height="${H-pT-pB}" fill="var(--accent-soft)" opacity=".95"/>`);
+  });
+
+  const xs=niceStep(xMax-xMin), ys=niceStep(yMax-yMin);
+  for(let x=Math.ceil(xMin/xs)*xs;x<=xMax+EPS;x+=xs){
+    const px=sx(x);
+    out.push(`<line x1="${px}" y1="${pT}" x2="${px}" y2="${H-pB}" stroke="var(--grid)"/>`);
+    const labelY=axisYVisible?axisYPx+18:H-pB+18;
+    out.push(`<text x="${px}" y="${labelY}" text-anchor="middle" font-size="12" fill="var(--axis)">${fmt(x)}</text>`);
+  }
+  for(let y=Math.ceil(yMin/ys)*ys;y<=yMax+EPS;y+=ys){
+    const py=sy(y);
+    out.push(`<line x1="${pL}" y1="${py}" x2="${W-pR}" y2="${py}" stroke="var(--grid)"/>`);
+    const labelX=axisXVisible?axisXPx-10:pL-8;
+    out.push(`<text x="${labelX}" y="${py+4}" text-anchor="end" font-size="12" fill="var(--axis)">${fmt(y)}</text>`);
+  }
+
+  if(axisXVisible) out.push(`<line x1="${axisXPx}" y1="${pT}" x2="${axisXPx}" y2="${H-pB}" stroke="var(--axis)" stroke-width="1.8"/>`);
+  if(axisYVisible) out.push(`<line x1="${pL}" y1="${axisYPx}" x2="${W-pR}" y2="${axisYPx}" stroke="var(--axis)" stroke-width="1.8"/>`);
+
+  const colors=['var(--curve)','var(--curve2)','var(--curve3)','#d97706'];
+  funcs.forEach((f,k)=>{
+    let d='';
+    for(let i=0;i<=800;i++){
+      const x=xMin+(xMax-xMin)*i/800, y=f.fn(x);
+      if(!Number.isFinite(y)) continue;
+      d+=(d?' L ':'M ')+sx(x).toFixed(2)+' '+sy(y).toFixed(2);
+    }
+    out.push(`<path d="${d}" fill="none" stroke="${f.color||colors[k%colors.length]}" stroke-width="${f.width||4}" stroke-linecap="round"/>`);
+  });
+
+  (opts.points||[]).forEach(p=>{
+    out.push(`<circle class="graph-point" data-point-x="${clean(p.x)}" data-point-y="${clean(p.y)}" cx="${sx(p.x)}" cy="${sy(p.y)}" r="${p.r||6}" fill="${p.fill||'var(--curve3)'}" stroke="white" stroke-width="2"/>`);
+    if(p.label) out.push(`<text x="${sx(p.x)+9}" y="${sy(p.y)-10}" font-size="12" font-weight="800" fill="${p.fill||'var(--curve3)'}" paint-order="stroke" stroke="white" stroke-width="4">${p.label}</text>`);
+    if(p.axisLabel){
+      const ay=axisYVisible?axisYPx+18:H-pB+18;
+      out.push(`<text x="${sx(p.x)}" y="${ay}" text-anchor="middle" font-size="12" font-weight="800" fill="${p.fill||'var(--curve3)'}" paint-order="stroke" stroke="white" stroke-width="4">${p.axisLabel}</text>`);
+    }
+  });
+
+  out.push(`<rect x="${pL}" y="${pT}" width="${W-pL-pR}" height="${H-pT-pB}" fill="none" stroke="var(--line)"/>`);
+  svg.innerHTML=out.join('');
+}
+function numericRoots(fn,xMin=-20,xMax=20,ds=.04){const roots=[];let prev=xMin,yp=fn(prev);for(let x=xMin+ds;x<=xMax+EPS;x+=ds){const y=fn(x);if(Math.abs(y)<1e-6)roots.push(x);if(Number.isFinite(yp)&&Number.isFinite(y)&&yp*y<0){let lo=x-ds,hi=x;for(let k=0;k<45;k++){const mid=(lo+hi)/2;if(fn(lo)*fn(mid)<=0)hi=mid;else lo=mid}roots.push((lo+hi)/2)}prev=x;yp=y}roots.sort((a,b)=>a-b);const u=[];roots.forEach(r=>{r=clean(r);if(!u.some(v=>Math.abs(v-r)<.02))u.push(r)});return u}
+
+// graph tab
+function miniGraphCard(id,title){return `<div class="mini-card"><div class="mini-head">${title}</div><div class="mini-wrap"><svg class="mini-svg" id="${id}" viewBox="0 0 900 340"></svg></div></div>`}
+function drawMiniGraphs(list){list.forEach(item=>{const el=$(item.id);if(el)graphSVG(el,item.funcs,item.opts||{})})}
+
+function texSignedAbsReplacement(a,b,c,sign,first=false){
+  if(Math.abs(a)<EPS) return '';
+
+  const inner=texLinear(b,c);
+  const replacement=sign>=0
+    ? `\\left(${inner}\\right)`
+    : `-\\left(${inner}\\right)`;
+
+  const neg=a<0;
+  const abs=Math.abs(a);
+
+  let body;
+  if(Math.abs(abs-1)<EPS){
+    body=replacement;
+  }else{
+    body=`${texNum(abs)}\\cdot${replacement}`;
+  }
+
+  return first
+    ? (neg?'-':'')+body
+    : (neg?' - ':' + ')+body;
+}
+
+function intervalRemovalTex(d,test){
+  const s1=(d.b1*test+d.c1)>=0?1:-1;
+
+  let out=texSignedAbsReplacement(
+    d.a1,d.b1,d.c1,s1,true
+  );
+
+  if(d.use2){
+    const s2=(d.b2*test+d.c2)>=0?1:-1;
+    out+=texSignedAbsReplacement(
+      d.a2,d.b2,d.c2,s2,false
+    );
+  }
+
+  if(Math.abs(d.m)>=EPS){
+    out+=texSigned(d.m,'x',false);
+  }
+
+  if(Math.abs(d.n)>=EPS){
+    out+=texSigned(d.n,'',false);
+  }
+
+  return out||'0';
+}
+
+function texLinearAt(m,n,x){
+  let out='';
+
+  if(Math.abs(m)>=EPS){
+    out=`${texNum(m)}\\cdot(${texNum(x)})`;
+  }
+
+  if(Math.abs(n)>=EPS){
+    if(!out){
+      out=texNum(n);
+    }else{
+      out+=n<0
+        ? `-${texNum(Math.abs(n))}`
+        : `+${texNum(n)}`;
+    }
+  }
+
+  return out||'0';
+}
+
+function pointSubstitutionTex(d,x){
+  let out='';
+
+  function absTermAt(a,b,c,first){
+    if(Math.abs(a)<EPS) return '';
+
+    const inner=texLinearAt(b,c,x);
+    const neg=a<0;
+    const abs=Math.abs(a);
+
+    const body=Math.abs(abs-1)<EPS
+      ? `\\left|${inner}\\right|`
+      : `${texNum(abs)}\\cdot\\left|${inner}\\right|`;
+
+    return first
+      ? (neg?'-':'')+body
+      : (neg?' - ':' + ')+body;
+  }
+
+  out+=absTermAt(
+    d.a1,d.b1,d.c1,true
+  );
+
+  if(d.use2){
+    out+=absTermAt(
+      d.a2,d.b2,d.c2,false
+    );
+  }
+
+  if(Math.abs(d.m)>=EPS){
+    const abs=Math.abs(d.m);
+    const product=Math.abs(abs-1)<EPS
+      ? `(${texNum(x)})`
+      : `${texNum(abs)}\\cdot(${texNum(x)})`;
+
+    out+=d.m<0
+      ? ` - ${product}`
+      : ` + ${product}`;
+  }
+
+  if(Math.abs(d.n)>=EPS){
+    out+=d.n<0
+      ? ` - ${texNum(Math.abs(d.n))}`
+      : ` + ${texNum(d.n)}`;
+  }
+
+  return out||'0';
+}
+
+function enableGraphPointInteraction(svg){
+  if(!svg || svg.dataset.pointInteraction==='1') return;
+  svg.dataset.pointInteraction='1';
+
+  svg.addEventListener('click',e=>{
+    const circle=e.target.closest?.('.graph-point');
+    svg.querySelectorAll('.coord-popover').forEach(n=>n.remove());
+
+    if(!circle) return;
+
+    const x=Number(circle.dataset.pointX);
+    const y=Number(circle.dataset.pointY);
+    const cx=Number(circle.getAttribute('cx'));
+    const cy=Number(circle.getAttribute('cy'));
+
+    const text=`[${fmt(x)};${fmt(y)}]`;
+    const width=Math.max(72, text.length*8.2+18);
+    const height=30;
+
+    const vb=svg.viewBox.baseVal;
+    let bx=cx+12, by=cy-42;
+    if(bx+width>vb.x+vb.width-8) bx=cx-width-12;
+    if(by<vb.y+8) by=cy+12;
+
+    const NS='http://www.w3.org/2000/svg';
+    const g=document.createElementNS(NS,'g');
+    g.setAttribute('class','coord-popover');
+
+    const rect=document.createElementNS(NS,'rect');
+    rect.setAttribute('x',bx);
+    rect.setAttribute('y',by);
+    rect.setAttribute('width',width);
+    rect.setAttribute('height',height);
+    rect.setAttribute('rx','8');
+
+    const label=document.createElementNS(NS,'text');
+    label.setAttribute('x',bx+width/2);
+    label.setAttribute('y',by+20);
+    label.setAttribute('text-anchor','middle');
+    label.textContent=text;
+
+    g.append(rect,label);
+    svg.appendChild(g);
+  });
+}
+
+function enableAllGraphInteractions(){
+  document.querySelectorAll('svg.graph,.mini-svg').forEach(enableGraphPointInteraction);
+}
+
+let graphMethod='transform';
+function gData(){return{a1:+$('g_a1').value,b1:+$('g_b1').value,c1:+$('g_c1').value,use2:$('g_use2').checked,a2:+$('g_a2').value,b2:+$('g_b2').value,c2:+$('g_c2').value,m:+$('g_m').value,n:+$('g_n').value}}
+function gFn(d){return x=>d.a1*Math.abs(d.b1*x+d.c1)+(d.use2?d.a2*Math.abs(d.b2*x+d.c2):0)+d.m*x+d.n}
+function gTex(d){let out=texAbsTerm(d.a1,d.b1,d.c1,true);if(d.use2)out+=texAbsTerm(d.a2,d.b2,d.c2,!out);if(Math.abs(d.m)>=EPS)out+=texSigned(d.m,'x',!out);if(Math.abs(d.n)>=EPS||!out)out+=texSigned(d.n,'',!out);return out||'0'}
+function breakpoints(d){let a=[];if(Math.abs(d.b1)>=EPS)a.push(clean(-d.c1/d.b1));if(d.use2&&Math.abs(d.b2)>=EPS)a.push(clean(-d.c2/d.b2));a.sort((x,y)=>x-y);return a.filter((v,i)=>i===0||Math.abs(v-a[i-1])>EPS)}
+function intervalPieces(d){const bp=breakpoints(d),cuts=[-Infinity,...bp,Infinity],res=[];for(let i=0;i<cuts.length-1;i++){const L=cuts[i],R=cuts[i+1],test=Number.isFinite(L)&&Number.isFinite(R)?(L+R)/2:Number.isFinite(R)?R-1:L+1;let M=d.m,N=d.n,s1=(d.b1*test+d.c1)>=0?1:-1;M+=d.a1*s1*d.b1;N+=d.a1*s1*d.c1;if(d.use2){const s2=(d.b2*test+d.c2)>=0?1:-1;M+=d.a2*s2*d.b2;N+=d.a2*s2*d.c2}res.push({L,R,M:clean(M),N:clean(N),test:clean(test)})}return res}
+function renderG(){
+  const d=gData(), fn=gFn(d), bps=breakpoints(d), roots=numericRoots(fn,-15,15,.04), pieces=intervalPieces(d);
+
+  $('g_term2').style.display=d.use2?'block':'none';
+  $('g_formula').innerHTML=md(`f(x)=${gTex(d)}`);
+
+  $('g_recommend').textContent=d.use2
+    ?'Doporučený postup: dělení definičního oboru na intervaly. U více absolutních hodnot je to nejpřehlednější.'
+    :Math.abs(d.m)<EPS
+      ?'Doporučený postup: transformace základního grafu. U jedné absolutní hodnoty je to obvykle nejrychlejší.'
+      :'Doporučený postup: intervaly. Člen mimo absolutní hodnotu dělá čistou transformaci méně přehlednou.';
+
+  $('g_methodBadge').textContent=graphMethod==='transform'?'Transformace':graphMethod==='intervals'?'Intervaly':'Tabulka';
+
+  const samplePoints=pieces.map((p,i)=>({
+    x:clean(p.test),
+    y:clean(fn(p.test)),
+    label:`P${i+1}`,
+    fill:'#d97706'
+  }));
+
+  // Body zlomu a nulové body jsou v grafu klikací, ale jejich x-hodnoty
+  // jsou stále napsané přímo na ose x.
+  const pts=bps.map(x=>({
+    x,
+    y:fn(x),
+    axisLabel:`${fmt(x)}`,
+    fill:'var(--curve3)'
+  }));
+
+  roots.forEach(x=>pts.push({
+    x,
+    y:0,
+    axisLabel:`${fmt(x)}`,
+    fill:'var(--curve2)'
+  }));
+
+  if(graphMethod==='table') samplePoints.forEach(p=>pts.push(p));
+
+  graphSVG($('g_graph'),[
+    {fn,color:'var(--curve)',width:4}
+  ],{points:pts});
+
+  $('g_legend').innerHTML=
+    '<span><i style="background:var(--curve)"></i>funkce</span>'+
+    '<span><i style="background:var(--curve3)"></i>změna předpisu</span>'+
+    '<span><i style="background:var(--curve2)"></i>nulové body</span>'+
+    (graphMethod==='table'?'<span><i style="background:#d97706"></i>zvolené body</span>':'');
+
+  let calc='', mini=[];
+
+  // ----------------------------------------------------------
+  // TRANSFORMACE
+  // ----------------------------------------------------------
+  if(graphMethod==='transform'){
+    if(d.use2||Math.abs(d.m)>=EPS){
+      calc=details('Transformace – kdy je vhodná',
+        step('U této funkce je čistá transformace méně přehledná.')+
+        answer('Pro tento příklad je vhodnější metoda <strong>Intervaly</strong>.')
+      );
+    }else{
+      const inner=texLinear(d.b1,d.c1);
+      const base1=texAbsTerm(d.a1,d.b1,d.c1,true);
+      const finalTex=gTex(d);
+
+      calc=details('Postup transformací',
+        step(`<strong>1.</strong> Začneme základním grafem:
+          ${md('y=x')}
+          <div class="mini-steps">${miniGraphCard('gmini1','1. krok')}</div>`) +
+
+        step(`<strong>2.</strong> Upravíme výraz uvnitř absolutní hodnoty:
+          ${md(`y=${inner}`)}
+          <div class="mini-steps">${miniGraphCard('gmini2','2. krok')}</div>`) +
+
+        step(`<strong>3.</strong> Zápornou část překlopíme nad osu x:
+          ${md(`y=\\left|${inner}\\right|`)}
+          <div class="mini-steps">${miniGraphCard('gmini3','3. krok')}</div>`) +
+
+        step(`<strong>4.</strong> Použijeme koeficient před absolutní hodnotou:
+          ${md(`y=${base1}`)}
+          <div class="mini-steps">${miniGraphCard('gmini4','4. krok')}</div>`) +
+
+        step(`<strong>5.</strong> Nakonec posuneme graf o konstantu:
+          ${md(`y=${finalTex}`)}
+          <div class="mini-steps">${miniGraphCard('gmini5','5. krok')}</div>`) +
+
+        answer(`Výsledný graf odpovídá funkci ${mi(`f(x)=${finalTex}`)}.`)
+      );
+
+      mini=[
+        {id:'gmini1',funcs:[{fn:x=>x,color:'var(--curve)',width:4}],opts:{height:340,xMin:-6,xMax:6}},
+        {id:'gmini2',funcs:[{fn:x=>d.b1*x+d.c1,color:'var(--curve)',width:4}],opts:{height:340,xMin:-6,xMax:6}},
+        {id:'gmini3',funcs:[{fn:x=>Math.abs(d.b1*x+d.c1),color:'var(--curve)',width:4}],opts:{height:340,xMin:-6,xMax:6}},
+        {id:'gmini4',funcs:[{fn:x=>d.a1*Math.abs(d.b1*x+d.c1),color:'var(--curve)',width:4}],opts:{height:340,xMin:-6,xMax:6}},
+        {id:'gmini5',funcs:[{fn:x=>fn(x),color:'var(--curve)',width:4}],opts:{height:340,xMin:-6,xMax:6}}
+      ];
+    }
+
+  // ----------------------------------------------------------
+  // INTERVALY
+  // ----------------------------------------------------------
+  }else if(graphMethod==='intervals'){
+    let body=step('Nejprve najdeme body, kde se mění předpis, tedy nulové body výrazů uvnitř absolutních hodnot.');
+
+    if(Math.abs(d.b1)>=EPS){
+      const x1=clean(-d.c1/d.b1);
+      const y1=clean(fn(x1));
+
+      body+=step(`Pro první absolutní hodnotu:
+        ${md(`${texLinear(d.b1,d.c1)}=0`)}
+        ${md(`x=${texNum(x1)}`)}
+        Dopočítáme y-ovou souřadnici bodu zlomu:
+        ${md(`f(${texNum(x1)})=${pointSubstitutionTex(d,x1)}=${texNum(y1)}`)}
+        ${md(`A_1=[${texNum(x1)};${texNum(y1)}]`)}`);
+    }
+
+    if(d.use2&&Math.abs(d.b2)>=EPS){
+      const x2=clean(-d.c2/d.b2);
+      const y2=clean(fn(x2));
+
+      body+=step(`Pro druhou absolutní hodnotu:
+        ${md(`${texLinear(d.b2,d.c2)}=0`)}
+        ${md(`x=${texNum(x2)}`)}
+        Dopočítáme y-ovou souřadnici bodu zlomu:
+        ${md(`f(${texNum(x2)})=${pointSubstitutionTex(d,x2)}=${texNum(y2)}`)}
+        ${md(`A_2=[${texNum(x2)};${texNum(y2)}]`)}`);
+    }
+
+    body+=step('Body zlomu rozdělí definiční obor na intervaly. V každém intervalu zvolíme pouze pomocnou hodnotu x, podle které určíme znaménko výrazu uvnitř absolutní hodnoty.');
+
+    const sharedXMin=Math.min(-6, ...(bps.map(x=>x-4)));
+    const sharedXMax=Math.max(6, ...(bps.map(x=>x+4)));
+
+    pieces.forEach((p,i)=>{
+      const intervalTex = p.L===-Infinity && p.R===Infinity
+        ? `(-\\infty;+\\infty)`
+        : p.L===-Infinity
+          ? `(-\\infty;${texNum(p.R)})`
+          : p.R===Infinity
+            ? `(${texNum(p.L)};+\\infty)`
+            : `(${texNum(p.L)};${texNum(p.R)})`;
+
+      const test=clean(p.test);
+
+      let signs='';
+
+      const u1=clean(d.b1*test+d.c1);
+      const s1=u1>=0?1:-1;
+
+      signs+=`Zvolíme například ${mi(`x=${texNum(test)}`)}. Dosadíme tuto hodnotu do výrazu ${mi(texLinear(d.b1,d.c1))}:`;
+
+      signs+=md(
+        `${texLinearAt(d.b1,d.c1,test)}=${texNum(u1)}${u1>=0?'\\ge0':'<0'}`
+      );
+
+      if(s1>=0){
+        signs+=`Výraz je nezáporný, proto absolutní hodnotu pouze odstraníme:`;
+        signs+=md(
+          `\\left|${texLinear(d.b1,d.c1)}\\right|=${texLinear(d.b1,d.c1)}`
+        );
+      }else{
+        signs+=`Výraz je záporný, proto absolutní hodnotu odstraníme a před výraz dáme mínus:`;
+        signs+=md(
+          `\\left|${texLinear(d.b1,d.c1)}\\right|=-\\left(${texLinear(d.b1,d.c1)}\\right)`
+        );
+      }
+
+      if(d.use2){
+        const u2=clean(d.b2*test+d.c2);
+        const s2=u2>=0?1:-1;
+
+        signs+=`Stejnou hodnotu ${mi(`x=${texNum(test)}`)} dosadíme do druhého výrazu ${mi(texLinear(d.b2,d.c2))}:`;
+
+        signs+=md(
+          `${texLinearAt(d.b2,d.c2,test)}=${texNum(u2)}${u2>=0?'\\ge0':'<0'}`
+        );
+
+        if(s2>=0){
+          signs+=`Druhý výraz je nezáporný:`;
+          signs+=md(
+            `\\left|${texLinear(d.b2,d.c2)}\\right|=${texLinear(d.b2,d.c2)}`
+          );
+        }else{
+          signs+=`Druhý výraz je záporný:`;
+          signs+=md(
+            `\\left|${texLinear(d.b2,d.c2)}\\right|=-\\left(${texLinear(d.b2,d.c2)}\\right)`
+          );
+        }
+      }
+
+      const removed=intervalRemovalTex(d,test);
+
+      const algebra =
+        `Dosadíme odstraněné absolutní hodnoty do původního předpisu:
+         ${md(`f(x)=${gTex(d)}`)}
+         ${md(`f(x)=${removed}`)}
+         Upravíme závorky a sečteme stejné členy:
+         ${md(`\\boxed{f(x)=${texLinear(p.M,p.N)}}`)}`;
+
+      body+=step(`<strong>${i+1}. interval</strong>
+        ${md(intervalTex)}
+        ${signs}
+        ${algebra}
+        <div class="mini-steps">${miniGraphCard(`gint${i}`,`kus grafu ${i+1}`)}</div>`);
+
+      mini.push({
+        id:`gint${i}`,
+        funcs:[
+          {
+            fn:x=>{
+              const inInterval=
+                (p.L===-Infinity||x>=p.L-EPS) &&
+                (p.R===Infinity||x<=p.R+EPS);
+
+              return inInterval
+                ? p.M*x+p.N
+                : NaN;
+            },
+            color:'var(--curve)',
+            width:4
+          }
+        ],
+        opts:{
+          height:340,
+          xMin:sharedXMin,
+          xMax:sharedXMax,
+          shades:[{from:p.L,to:p.R}],
+          points:bps
+            .filter(x=>
+              (Number.isFinite(p.L)&&Math.abs(x-p.L)<EPS) ||
+              (Number.isFinite(p.R)&&Math.abs(x-p.R)<EPS)
+            )
+            .map(x=>({
+              x,
+              y:fn(x),
+              axisLabel:`${fmt(x)}`,
+              fill:'var(--curve3)'
+            }))
+        }
+      });
+    });
+
+    calc=details(
+      'Dělení definičního oboru',
+      body+
+      answer('Výsledný graf složíme z lineárních částí získaných v jednotlivých intervalech.')
+    );
+  }else{
+    let body=step('Nejprve určíme body zlomu a dopočítáme jejich y-ové souřadnice. Potom v každém vzniklém intervalu spočítáme už jen jeden další bod. Předpisy jednotlivých intervalů tady odvozovat nepotřebujeme.');
+
+    const zeroRows=[];
+
+    if(Math.abs(d.b1)>=EPS){
+      const x1=clean(-d.c1/d.b1);
+      const y1=clean(fn(x1));
+
+      body+=step(`${md(`${texLinear(d.b1,d.c1)}=0`)}
+        ${md(`x=${texNum(x1)}`)}
+        Dosadíme do původní funkce:
+        ${md(`f(${texNum(x1)})=${pointSubstitutionTex(d,x1)}`)}
+        ${md(`f(${texNum(x1)})=${texNum(y1)}`)}
+        ${md(`A_1=[${texNum(x1)};${texNum(y1)}]`)}`);
+
+      zeroRows.push(`<tr><td>1</td><td>${fmt(x1)}</td><td>${fmt(y1)}</td><td>[${fmt(x1)};${fmt(y1)}]</td></tr>`);
+    }
+
+    if(d.use2&&Math.abs(d.b2)>=EPS){
+      const x2=clean(-d.c2/d.b2);
+      const y2=clean(fn(x2));
+
+      body+=step(`${md(`${texLinear(d.b2,d.c2)}=0`)}
+        ${md(`x=${texNum(x2)}`)}
+        Dosadíme do původní funkce:
+        ${md(`f(${texNum(x2)})=${pointSubstitutionTex(d,x2)}`)}
+        ${md(`f(${texNum(x2)})=${texNum(y2)}`)}
+        ${md(`A_2=[${texNum(x2)};${texNum(y2)}]`)}`);
+
+      zeroRows.push(`<tr><td>2</td><td>${fmt(x2)}</td><td>${fmt(y2)}</td><td>[${fmt(x2)};${fmt(y2)}]</td></tr>`);
+    }
+
+    if(zeroRows.length){
+      body+=`<div class="table-wrap"><table>
+        <thead><tr><th>Bod zlomu</th><th>x</th><th>f(x)</th><th>Souřadnice</th></tr></thead>
+        <tbody>${zeroRows.join('')}</tbody>
+      </table></div>`;
+    }
+
+    body+=step('Body zlomu zaneseme do grafu. V každém intervalu teď stačí zvolit jeden další bod.');
+
+    const pointRows=[];
+
+    pieces.forEach((p,i)=>{
+      const L=p.L===-Infinity?'−∞':fmt(p.L);
+      const R=p.R===Infinity?'+∞':fmt(p.R);
+      const x=clean(p.test);
+      const y=clean(fn(x));
+
+      body+=step(`<strong>${i+1}. interval: (${L}; ${R})</strong><br>
+        Zvolíme například ${mi(`x=${texNum(x)}`)}.
+        ${md(`f(${texNum(x)})=${pointSubstitutionTex(d,x)}`)}
+        ${md(`f(${texNum(x)})=${texNum(y)}`)}
+        Dostaneme bod:
+        ${md(`P_${i+1}=[${texNum(x)};${texNum(y)}]`)}`);
+
+      pointRows.push(`<tr>
+        <td>${i+1}</td>
+        <td>(${L}; ${R})</td>
+        <td>${fmt(x)}</td>
+        <td>${fmt(y)}</td>
+        <td>[${fmt(x)};${fmt(y)}]</td>
+      </tr>`);
+    });
+
+    body+=`<div class="table-wrap"><table>
+      <thead><tr><th>Interval</th><th>Rozsah</th><th>Zvolený x</th><th>f(x)</th><th>Bod</th></tr></thead>
+      <tbody>${pointRows.join('')}</tbody>
+    </table></div>`;
+
+    body+=step('V každém intervalu máme bod zlomu nebo krajní směr grafu a jeden dopočítaný bod. Tyto body propojíme přímkou nebo úsečkou.');
+
+    calc=details('Tabulka bodů',body+answer('Pro tuto metodu nám předpisy jednotlivých intervalů nejsou potřeba. Stačí vypočítané body.'));
+  }
+
+  $('g_calc').innerHTML=calc;
+  drawMiniGraphs(mini);
+
+  // Klikání na body zapneme po každém překreslení grafů.
+  enableAllGraphInteractions();
+
+  const slopes=pieces.map(p=>p.M);
+  const vals=bps.map(x=>fn(x));
+
+  let range='z grafu / podle krajních směrnic';
+
+  if(slopes.length&&slopes[0]<0&&slopes.at(-1)>0&&vals.length)
+    range=`⟨${fmt(Math.min(...vals))}; +∞)`;
+  else if(slopes.length&&slopes[0]>0&&slopes.at(-1)<0&&vals.length)
+    range=`(−∞; ${fmt(Math.max(...vals))}⟩`;
+
+  let monot='';
+
+  pieces.forEach((p,i)=>{
+    const L=p.L===-Infinity?'−∞':fmt(p.L);
+    const R=p.R===Infinity?'+∞':fmt(p.R);
+
+    monot+=(i?'; ':'')+
+      `${p.M>EPS?'roste':p.M<-EPS?'je klesající':'je konstantní'} na (${L}; ${R})`;
+  });
+
+  $('g_props').innerHTML=
+    `<div class="prop"><div class="k">Definiční obor</div><div class="v">ℝ</div></div>`+
+    `<div class="prop"><div class="k">Obor hodnot</div><div class="v">${range}</div></div>`+
+    `<div class="prop"><div class="k">Nulové body</div><div class="v">${roots.length?roots.map(fmt).join(', '):'žádné'}</div></div>`+
+    `<div class="prop"><div class="k">Zlomy grafu</div><div class="v">${bps.length?bps.map(fmt).join(', '):'žádné'}</div></div>`+
+    `<div class="prop" style="grid-column:span 2"><div class="k">Monotónnost</div><div class="v">${monot}</div></div>`;
+
+  typeset([$('g_formula'),$('g_calc')]);
+}
+// transform tab
+function tData(){return{type:$('t_type').value,a:+$('t_a').value,b:+$('t_b').value,c:+$('t_c').value,mode:$('t_mode').value}}
+function tBaseFn(d){
+  return x=>d.type==='line'
+    ? d.a*x+d.b
+    : d.a*x*x+d.b*x+d.c
+}
+function tTransFn(d){
+  const f=tBaseFn(d);
+  return d.mode==='absY'
+    ? (x=>Math.abs(f(x)))
+    : d.mode==='absX'
+      ? (x=>f(Math.abs(x)))
+      : (x=>Math.abs(f(Math.abs(x))))
+}
+function tTex(d){
+  return d.type==='line'
+    ? texLinear(d.a,d.b)
+    : `${texSigned(d.a,'x^2',true)}${texSigned(d.b,'x')}${texSigned(d.c,'')}`
+}
+function tAbsXTex(d){
+  if(d.type==='line'){
+    let out=texSigned(d.a,'\\left|x\\right|',true);
+    if(Math.abs(d.b)>=EPS || !out){
+      out+=texSigned(d.b,'',!out);
+    }
+    return out||'0';
+  }
+
+  let out=texSigned(d.a,'x^2',true);
+
+  if(Math.abs(d.b)>=EPS){
+    out+=texSigned(d.b,'\\left|x\\right|',!out);
+  }
+
+  if(Math.abs(d.c)>=EPS || !out){
+    out+=texSigned(d.c,'',!out);
+  }
+
+  return out||'0';
+}
+function tResultTex(d){
+  const base=tTex(d);
+  const absX=tAbsXTex(d);
+
+  if(d.mode==='absY'){
+    return `y=\\left|${base}\\right|`;
+  }
+
+  if(d.mode==='absX'){
+    return `y=${absX}`;
+  }
+
+  return `y=\\left|${absX}\\right|`;
+}
+function renderT(){
+  const d=tData();
+  const f=tBaseFn(d);
+  const g=tTransFn(d);
+  const base=tTex(d);
+  const result=tResultTex(d);
+
+  $('t_cWrap').style.display=d.type==='quad'?'block':'none';
+  $('t_formula').innerHTML=md(result);
+
+  const hint=d.mode==='absY'
+    ? 'Část grafu pod osou x se překlopí nahoru. Část nad osou x zůstane beze změny.'
+    : d.mode==='absX'
+      ? 'Použije se pravá polovina původního grafu a zrcadlí se podle osy y.'
+      : 'Nejprve použijeme pravou polovinu grafu a zrcadlíme ji podle osy y, potom vše pod osou x překlopíme nahoru.';
+
+  $('t_hint').textContent=hint;
+
+  graphSVG(
+    $('t_graph'),
+    [
+      {fn:f,color:'var(--curve2)',width:3},
+      {fn:g,color:'var(--curve)',width:4}
+    ],
+    {}
+  );
+
+  $('t_calc').innerHTML=details(
+    'Postup transformace',
+    step(`Původní funkce:${md(`f(x)=${base}`)}`)+
+    step(hint)+
+    answer(`Výsledná funkce:${md(result)}`)
+  );
+
+  enableAllGraphInteractions();
+  typeset([$('t_formula'),$('t_calc')]);
+}
+// inverse
+function renderI(){const p=+$('i_p').value,q=+$('i_q').value,a=+$('i_a').value,dx=Math.max(1,Math.abs(+$('i_dx').value||1)),x2=p+dx,y2=a*Math.abs(x2-p)+q,fn=x=>a*Math.abs(x-p)+q;$('i_data').innerHTML=md(`V=[${texNum(p)};${texNum(q)}],\\qquad A=[${texNum(x2)};${texNum(y2)}]`);graphSVG($('i_graph'),[{fn,color:'var(--curve)',width:4}],{points:[{x:p,y:q,label:`V [${fmt(p)}; ${fmt(q)}]`,fill:'var(--curve3)'},{x:x2,y:y2,label:`A [${fmt(x2)}; ${fmt(y2)}]`,fill:'var(--curve2)'}]});$('i_calc').innerHTML=details('Určení předpisu z vrcholu a bodu',step(`<strong>1.</strong> Použijeme tvar:${md('y=a|x-p|+q')}`)+step(`<strong>2.</strong> Z vrcholu přímo odečteme:${md(`p=${texNum(p)},\\qquad q=${texNum(q)}`)}`)+step(`<strong>3.</strong> Dosadíme druhý bod:${md(`${texNum(y2)}=a\\left|${texNum(x2)}-${texNum(p)}\\right|+${texNum(q)}`)}`)+step(`<strong>4.</strong> Vyjádříme a:${md(`${texNum(y2-q)}=a\\cdot${texNum(Math.abs(x2-p))}`)}${md(`a=${texNum(a)}`)}`)+answer(`Předpis:${md(`\\boxed{y=${texAbsTerm(a,1,-p,true)}${texSigned(q,'')}}`)}`));enableAllGraphInteractions();typeset([$('i_data'),$('i_calc')])}
+
+// equation/inequality
+function absLineTex(a,b,c,d){let out=texAbsTerm(a,b,c,true);if(Math.abs(d)>=EPS)out+=texSigned(d,'',!out);return out||texNum(d)}
+function dData(p){return{a:+$(p+'_a').value,b:+$(p+'_b').value,c:+$(p+'_c').value,d:+$(p+'_d').value,m:+$(p+'_m').value,n:+$(p+'_n').value,op:p==='n'?$('n_op').value:'='}}
+const diffFn=d=>x=>d.a*Math.abs(d.b*x+d.c)+d.d-(d.m*x+d.n);
+function intervals(d,roots){const fn=diffFn(d),want=d.op[0]==='<'?-1:1,cuts=[-Infinity,...roots,Infinity],res=[];for(let i=0;i<cuts.length-1;i++){const L=cuts[i],R=cuts[i+1],test=Number.isFinite(L)&&Number.isFinite(R)?(L+R)/2:Number.isFinite(R)?R-1:L+1,y=fn(test);if(want<0?y<0:y>0)res.push({from:L,to:R})}return res}
+function intervalTex(res,roots,inc){if(!res.length)return inc&&roots.length===1?`\\{${texNum(roots[0])}\\}`:'\\varnothing';if(res.length===1&&res[0].from===-Infinity&&res[0].to===Infinity)return'\\mathbb{R}';return res.map(it=>{const L=it.from===-Infinity?'-\\infty':texNum(it.from),R=it.to===Infinity?'+\\infty':texNum(it.to),l=it.from===-Infinity?'(':(inc?'\\langle':'('),r=it.to===Infinity?')':(inc?'\\rangle':')');return`${l}${L};${R}${r}`}).join('\\cup')}
+function renderE(){const d=dData('e'),L=x=>d.a*Math.abs(d.b*x+d.c)+d.d,R=x=>d.m*x+d.n,roots=numericRoots(diffFn(d),-25,25,.03);$('e_formula').innerHTML=md(`${absLineTex(d.a,d.b,d.c,d.d)}=${texLinear(d.m,d.n)}`);graphSVG($('e_graph'),[{fn:L,color:'var(--curve)',width:4},{fn:R,color:'var(--curve2)',width:3}],{points:roots.map(r=>({x:r,y:L(r),axisLabel:`${fmt(r)}`,fill:'var(--curve3)'}))});$('e_result').innerHTML=roots.length?`Řešení: ${md(`x\\in\\{${roots.map(texNum).join(';')}\\}`)}`:`Řešení: ${md('\\varnothing')}`;let body=step(`Rovnici řešíme graficky jako průsečíky funkcí:${md(`f(x)=${absLineTex(d.a,d.b,d.c,d.d)}`)}${md(`g(x)=${texLinear(d.m,d.n)}`)}`);if(Math.abs(d.b)>=EPS){const x0=clean(-d.c/d.b);body+=step(`Absolutní hodnota mění předpis v bodě:${md(`${texLinear(d.b,d.c)}=0`)}${md(`x=${texNum(x0)}`)}`)}body+=step('V intervalech odstraníme absolutní hodnotu podle znaménka a vyřešíme vzniklou lineární rovnici.')+answer(roots.length?`Z grafu dostaneme:${md(`x=${roots.map(texNum).join('\\quad\\text{nebo}\\quad')}`)}`:'Grafy se neprotínají, rovnice nemá reálné řešení.');$('e_calc').innerHTML=details('Grafický a intervalový postup',body);enableAllGraphInteractions();typeset([$('e_formula'),$('e_result'),$('e_calc')])}
+function renderN(){const d=dData('n'),L=x=>d.a*Math.abs(d.b*x+d.c)+d.d,R=x=>d.m*x+d.n,roots=numericRoots(diffFn(d),-25,25,.03),res=intervals(d,roots),inc=d.op.includes('='),sol=intervalTex(res,roots,inc);$('n_formula').innerHTML=md(`${absLineTex(d.a,d.b,d.c,d.d)}${opTex(d.op)}${texLinear(d.m,d.n)}`);graphSVG($('n_graph'),[{fn:L,color:'var(--curve)',width:4},{fn:R,color:'var(--curve2)',width:3}],{height:590,shades:res,points:roots.map(r=>({x:r,y:L(r),axisLabel:`${fmt(r)}`,fill:'var(--curve3)'}))});$('n_result').innerHTML=`Řešení: ${md(`x\\in ${sol}`)}`;const relation=d.op[0]==='<'?'pod grafem pravé strany':'nad grafem pravé strany';$('n_calc').innerHTML=details('Grafické řešení nerovnice',step(`Zakreslíme oba grafy:${md(`f(x)=${absLineTex(d.a,d.b,d.c,d.d)}`)}${md(`g(x)=${texLinear(d.m,d.n)}`)}`)+step('Najdeme jejich průsečíky. Ty rozdělí osu x na intervaly.')+step(`Hledáme ta x, pro která leží graf levé strany <strong>${relation}</strong>.`)+step(inc?'Nerovnost obsahuje rovnost, proto průsečíky do řešení patří.':'Nerovnost je ostrá, proto průsečíky do řešení nepatří.')+answer(`Výsledek:${md(`x\\in ${sol}`)}`));enableAllGraphInteractions();typeset([$('n_formula'),$('n_result'),$('n_calc')])}
+
+// generators and events
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,choice=a=>a[Math.floor(Math.random()*a.length)];
+function genG(){const count=+$('g_genCount').value;$('g_use2').checked=count===2;$('g_a1').value=choice([-2,-1,1,2]);$('g_b1').value=choice([-2,-1,1,2]);$('g_c1').value=rand(-4,4);$('g_n').value=rand(-3,3);$('g_m').value=count===2?0:choice([0,0,0,1,-1]);if(count===2){$('g_a2').value=choice([-2,-1,1,2]);$('g_b2').value=choice([-1,1]);$('g_c2').value=rand(-4,4)}renderG()}
+function genT(){$('t_type').value=choice(['line','quad']);$('t_a').value=choice([-2,-1,1,2]);$('t_b').value=rand(-3,3);$('t_c').value=rand(-3,3);$('t_mode').value=choice(['absY','absX','both']);renderT()}
+function genI(){$('i_p').value=rand(-4,4);$('i_q').value=rand(-4,3);$('i_a').value=choice([-2,-1,-.5,.5,1,2]);$('i_dx').value=choice([1,2,3]);renderI()}
+function genD(p){$(p+'_a').value=choice([1,1,2,-1]);$(p+'_b').value=choice([-2,-1,1,2]);$(p+'_c').value=rand(-4,4);$(p+'_d').value=rand(-2,2);$(p+'_m').value=choice([0,0,1,-1]);$(p+'_n').value=rand(-4,5);if(p==='n')$('n_op').value=choice(['<','<=','>','>=']);p==='e'?renderE():renderN()}
+document.querySelectorAll('.top-tab').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.top-tab').forEach(b=>b.classList.toggle('active',b===btn));document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+btn.dataset.view))});document.querySelectorAll('.method-btn').forEach(btn=>btn.onclick=()=>{graphMethod=btn.dataset.method;document.querySelectorAll('.method-btn').forEach(b=>b.classList.toggle('active',b===btn));renderG()});['g_a1','g_b1','g_c1','g_a2','g_b2','g_c2','g_m','g_n'].forEach(id=>$(id).oninput=renderG);$('g_use2').onchange=renderG;$('g_generate').onclick=genG;['t_type','t_a','t_b','t_c','t_mode'].forEach(id=>$(id).oninput=renderT);$('t_generate').onclick=genT;['i_p','i_q','i_a','i_dx'].forEach(id=>$(id).oninput=renderI);$('i_generate').onclick=genI;['e_a','e_b','e_c','e_d','e_m','e_n'].forEach(id=>$(id).oninput=renderE);$('e_generate').onclick=()=>genD('e');['n_a','n_b','n_c','n_d','n_m','n_n'].forEach(id=>$(id).oninput=renderN);$('n_op').onchange=renderN;$('n_generate').onclick=()=>genD('n');$('randomTop').onclick=()=>{const a=document.querySelector('.top-tab.active').dataset.view;a==='graph'?genG():a==='transform'?genT():a==='inverse'?genI():a==='equation'?genD('e'):genD('n')};$('resetAll').onclick=()=>location.reload();renderG();renderT();renderI();renderE();renderN();
+})();
+</script></body></html>
