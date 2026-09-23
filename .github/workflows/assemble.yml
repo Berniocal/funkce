@@ -60,3 +60,5 @@ jobs:
           git commit -m "Aktualizovány aplikace funkcí"
           git pull --rebase origin main
           git push
+
+# sync: hezke pruseciky v lehke obtiznosti
